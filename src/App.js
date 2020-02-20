@@ -87,7 +87,7 @@ class App extends React.Component{
             name:blockInfo.name,
             color:blockInfo.color,
             rent:blockInfo.rent || 1000,
-            price:blockInfo.price || 3000
+            price:blockInfo.cost || 3000
           }
         }
       );
@@ -125,8 +125,26 @@ class App extends React.Component{
   }
 
   buyProperty(){
+    const players = this.state.players;
+    const blocks = this.state.blocks;
+    const currPlayer = players[this.state.currentPlayer];
+    const balance = currPlayer.balanceMoney;
+    const currentBlock = this.state.currentBlock;
+    if(currentBlock.cost < balance ){
+      currPlayer.balanceMoney -= currentBlock.cost;
+      currPlayer.properties.push(currentBlock);
+      currentBlock.ownedBy = players[this.state.currentPlayer].id;
+      blocks[currentBlock.id-1] = currentBlock;
+      players[this.state.currentPlayer] = currPlayer;
+      this.closeModal();
+      console.log(this.state.players);
+      console.log(this.state.blocks)
+    }
+    else{
+      alert('You do not have enough money.');
+      this.closeModal();
+    }
 
-    this.closeModal()
     // alert('buy');
   }
   render(){
