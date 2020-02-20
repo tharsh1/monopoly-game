@@ -87,7 +87,7 @@ class App extends React.Component{
             name:blockInfo.name,
             color:blockInfo.color,
             rent:blockInfo.rent || 1000,
-            price:blockInfo.price || 3000
+            price:blockInfo.cost || 3000
           }
         }
       );
