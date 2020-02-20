@@ -8,7 +8,7 @@ class PlayerCard extends React.Component{
 
     render(){
         return (
-            <div className='player1-container'>
+            <div className='player1-container' style={{border: `${this.props.currentPlayer ? '2px solid green': '1px solid gray'}`}}>
 
             </div>
         )

@@ -224,12 +224,12 @@ class App extends React.Component{
   
           <div className="content">
               <div className="player-row1">
-                  <PlayerCard className={(this.state.players[this.state.currentPlayer].id === 0? 'current-player' : '')}/>
-                  <div className={"player2-container " + (this.state.players[this.state.currentPlayer].id === 1? 'current-player' : '')}></div>
+                  <PlayerCard currentPlayer={this.state.players[this.state.currentPlayer].id === 0}/>
+                  <PlayerCard  currentPlayer={this.state.players[this.state.currentPlayer].id === 1}/>
               </div>
               <div className="player-row2">
-                  <div className={"player3-container " + (this.state.players[this.state.currentPlayer].id === 2? 'current-player' : '')}></div>
-                  <div className={"player4-container " + (this.state.players[this.state.currentPlayer].id === 3? 'current-player' : '')}></div>    
+                  <PlayerCard currentPlayer={this.state.players[this.state.currentPlayer].id === 2}/>
+                  <PlayerCard currentPlayer={this.state.players[this.state.currentPlayer].id === 3}/>    
               </div>
           </div>
          
