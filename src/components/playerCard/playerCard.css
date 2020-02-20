@@ -1,0 +1,7 @@
+.player1-container, .player2-container, .player3-container, .player4-container{
+    width: 49%;
+    height: 95%;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 1%;
+}

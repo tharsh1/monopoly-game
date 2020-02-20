@@ -1,0 +1,42 @@
+.card{
+    width: 200px;
+    height: 300px;
+    border: 2px solid black;
+    margin: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f9ffaa9f;
+}
+
+.card-color-badge{
+    width: 100%;
+    height: 40px;
+    background-color: darkorchid;
+    border-bottom: 2px solid black;
+    box-sizing: border-box;
+    /* border-radius: 10px 10px 0 0; */
+}
+.card h1{
+    font-size: 1.6em;
+    text-align: center;
+    /* margin-top: px; */
+}
+
+.card h1:last-child{
+    margin-top: -10px;
+}
+.card .buyprice, .card .rent{
+    width: 100%;
+    margin-top: 30%;
+    text-align: center;
+}
+
+.card .rent{
+    bottom: 0;
+    position: relative;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
