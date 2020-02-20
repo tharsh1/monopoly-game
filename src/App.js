@@ -27,10 +27,10 @@ class App extends React.Component{
         price:0
       },
       players:[
-        {id:0,name: "deepanshu",position: 0,balanceMoney: 3000,properties:[]},
-        {id:1,name: "abc",position: 0,balanceMoney:3000,properties:[]},
-        {id:2,name: "def",position:0,balanceMoney: 3000,properties:[]},
-        {id:3,name: "ghi",position:0,balanceMoney: 3000,properties:[]}]
+        {id:0,name: "deepanshu",position: 0,balanceMoney: 15000,properties:[]},
+        {id:1,name: "abc",position: 0,balanceMoney:15000,properties:[]},
+        {id:2,name: "def",position:0,balanceMoney: 15000,properties:[]},
+        {id:3,name: "ghi",position:0,balanceMoney: 15000,properties:[]}]
     };
 
     this.movePawn = this.movePawn.bind(this);
@@ -79,23 +79,29 @@ class App extends React.Component{
     const players = this.state.players;
     const blockInfo = this.state.blocks[newPlayerPosition];
     if(blockInfo.type === 'PROPERTY'){
-      // this.displayBuyModal(playerInfo,blockInfo);
-      this.setState(
-        {
-          propBuyModalOpen:true,
-          cardState:{
-            name:blockInfo.name,
-            color:blockInfo.color,
-            rent:blockInfo.rent || 1000,
-            price:blockInfo.cost || 3000
+      console.log(blockInfo.ownedBy)
+      if(blockInfo.ownedBy === undefined){
+        this.setState(
+          {
+            propBuyModalOpen:true,
+            cardState:{
+              name:blockInfo.name,
+              color:blockInfo.color,
+              rent:blockInfo.rent || 1000,
+              price:blockInfo.cost || 3000
+            }
           }
-        }
-      );
-      this.nextPlayer(false , player , players);
+        );
+      }else{
+        alert('already bought');
+        this.nextPlayer(false,player,players)
+      }
+      
     }
     else if(blockInfo.type === 'JAIL'){
       players[player].balanceMoney -=3000;
       if(players[player].balanceMoney <=0){
+        alert(players[player].name + " is eliminated");
         players.splice(player,1);
         console.log(players)
         this.nextPlayer(true,player,players)
@@ -121,7 +127,8 @@ class App extends React.Component{
     }
   }
   closeModal(){
-    this.setState({propBuyModalOpen:false})
+    this.setState({propBuyModalOpen:false});
+    this.nextPlayer(false , this.state.currentPlayer , this.state.players);
   }
 
   buyProperty(){
@@ -136,9 +143,11 @@ class App extends React.Component{
       currentBlock.ownedBy = players[this.state.currentPlayer].id;
       blocks[currentBlock.id-1] = currentBlock;
       players[this.state.currentPlayer] = currPlayer;
+      this.setState({blocks,players});
       this.closeModal();
-      console.log(this.state.players);
-      console.log(this.state.blocks)
+      console.log(this.state);
+      console.log(this.state.blocks);
+      
     }
     else{
       alert('You do not have enough money.');
@@ -146,6 +155,7 @@ class App extends React.Component{
     }
 
     // alert('buy');
+    this.nextPlayer(false , this.state.currentPlayer , players);
   }
   render(){
     console.log(this.state.currentPlayer)
