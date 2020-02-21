@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -189,3 +190,43 @@
     transform: scale(1.03);
 }
 
+.chance-modal .modal{
+    flex-direction: column;
+}
+
+.chance-modal .modal button{
+    padding: 7px;
+    margin: auto 10px 10px 10px;
+    background-color: lightcoral;
+    border: 1px solid red;
+    font-size: 1.2em;
+    border-radius: 5px;
+    transition: 300ms ease-in-out;
+}
+
+.chance-modal .modal button:hover{
+    transform: scale(1.05);
+}
+
+.chance-modal .modal span{
+    width: 100%;
+    box-sizing: border-box;
+    padding:10px;
+    margin: 0  0 30px 0;
+
+}
+
+.chance-modal .modal div{
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    background-color: black;
+    color: white;
+    
+    /* font-weight: bold; */
+    font-size: 20px;
+    /* margin: 10px 10px 10px 10px; */
+}

@@ -48,3 +48,12 @@
     color: white;
     border-radius: 10px;
 }
+
+.current-playerName{
+    font-size: 1.3em;
+    font-weight: 600;
+    /* border: 1px solid red; */
+    align-self: center;
+    /* height: 100%; */
+
+}

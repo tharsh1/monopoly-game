@@ -1,23 +1,29 @@
 import React from 'react';
+import {ToastContainer,toast} from 'react-toastify';
+import _ from 'lodash';
 import Dice from './components/dice/dice';
 import Card from './components/card/Card';
 import Modal from './components/modal/modal'
+import PlayerCard from './components/playerCard/PlayerCard'
 import player1 from './resources/red-pawn.svg';
 import player2 from './resources/green-pawn.svg';
 import player3 from './resources/blue-pawn.svg';
 import player4 from './resources/yellow-pawn.svg';
-import PlayerCard from './components/playerCard/PlayerCard'
-import blocks from './utils/blockList'
-import _ from 'lodash';
 import buyicon from './resources/buyicon.svg';
+import blocks from './utils/blockList'
+import chance from './utils/chanceList'
+
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends React.Component{
   constructor(props){
     super(props);
     this.state={
       propBuyModalOpen:false,
-      blocks , 
+      chanceModalOpen:false,
+      blocks ,
+      currentChance:{},
       currentBlock:{},
       currentPlayer : 0,
       cardState:{
@@ -27,11 +33,16 @@ class App extends React.Component{
         price:0
       },
       players:[
-        {id:0,name: "deepanshu",position: 0,balanceMoney: 15000,properties:[]},
+        {id:0,name: "deepanshu",position: 0,balanceMoney: 15000,properties:[{id:2},{id:4}]},
         {id:1,name: "abc",position: 0,balanceMoney:15000,properties:[]},
         {id:2,name: "def",position:0,balanceMoney: 15000,properties:[]},
         {id:3,name: "ghi",position:0,balanceMoney: 15000,properties:[]}]
     };
+
+    // toast.configure({
+    //   autoClose:10000,
+    //   position:toast.POSITION.BOTTOM_RIGHT
+    // });
 
     this.movePawn = this.movePawn.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -39,6 +50,8 @@ class App extends React.Component{
     this.applyLogic = this.applyLogic.bind(this);
     this.buyProperty = this.buyProperty.bind(this);
     this.nextPlayer = this.nextPlayer.bind(this);
+    this.eliminatePlayer = this.eliminatePlayer.bind(this);
+    this.processChance = this.processChance.bind(this)
     // this.displayBuyModal = this.displayBuyModal.bind(this);
   }
 
@@ -47,7 +60,7 @@ class App extends React.Component{
   }
 
   movePawn(player,dice1,dice2){
-    console.log(player);
+    // console.log(player);
     const blocks = this.state.blocks;
     const players = this.state.players;
     let newPlayerPosition = (players[player].position + dice1 + dice2) % 40;
@@ -79,7 +92,7 @@ class App extends React.Component{
     const players = this.state.players;
     const blockInfo = this.state.blocks[newPlayerPosition];
     if(blockInfo.type === 'PROPERTY'){
-      console.log(blockInfo.ownedBy)
+      // console.log(blockInfo.ownedBy)
       if(blockInfo.ownedBy === undefined){
         this.setState(
           {
@@ -93,25 +106,48 @@ class App extends React.Component{
           }
         );
       }else{
-        alert('already bought');
+        console.log('yess')
+        toast('already bought',{type:toast.TYPE.INFO});
         this.nextPlayer(false,player,players)
       }
       
     }
     else if(blockInfo.type === 'JAIL'){
-      players[player].balanceMoney -=3000;
+      players[player].balanceMoney -=15000;
       if(players[player].balanceMoney <=0){
-        alert(players[player].name + " is eliminated");
-        players.splice(player,1);
-        console.log(players)
-        this.nextPlayer(true,player,players)
+        this.eliminatePlayer(player,players)
       }else{
         this.nextPlayer(false,player,players)
       }
     }
+    else if(blockInfo.type === 'CHANCE'){
+      const rand = Math.floor(Math.random() * chance.length);
+      const currentChance = chance[rand];
+      console.log(currentChance)
+      console.log(rand)
+      this.setState({
+        chanceModalOpen:true,
+        currentChance
+      });
+      
+    }
     else{
       this.nextPlayer(false,player,players)
     }
+  }
+
+  eliminatePlayer(player,players){
+    const blocks = this.state.blocks;
+    toast(players[player].name + " is eliminated",{type:toast.TYPE.ERROR});
+    const propertiesOwned = _.map(players[player].properties,obj => obj.id);
+    console.log(propertiesOwned);
+    for(let property of propertiesOwned){
+      console.log(blocks)
+      blocks[property-1].ownedBy = undefined;
+    }
+    this.setState({blocks});
+    players.splice(player,1);
+    this.nextPlayer(true,player,players)
   }
 
   nextPlayer(deletedthis , currentPlayer , players){
@@ -145,25 +181,69 @@ class App extends React.Component{
       players[this.state.currentPlayer] = currPlayer;
       this.setState({blocks,players});
       this.closeModal();
-      console.log(this.state);
-      console.log(this.state.blocks);
-      
     }
     else{
-      alert('You do not have enough money.');
+      toast('You do not have enough money.',{type: toast.TYPE.WARNING});
       this.closeModal();
     }
-
-    // alert('buy');
     this.nextPlayer(false , this.state.currentPlayer , players);
   }
+
+  processChance(){
+    this.setState({chanceModalOpen:false});
+    if(this.state.currentChance.move){
+      const finalPosition = this.state.currentChance.goToPosition;
+      const currentPosition = this.state.players[this.state.currentPlayer].position;
+      let moves = 0;
+      if(finalPosition > currentPosition){
+        moves = finalPosition-currentPosition;
+      }
+      else{
+        moves = (40-currentPosition) + finalPosition;
+      }
+      this.movePawn(this.state.currentPlayer , moves,0);
+    }
+    else{
+      const player = this.state.currentPlayer;
+      const players = this.state.players;
+      if(this.state.currentChance.buttonTag === 'PAY'){
+        players[player].balanceMoney -=this.state.currentChance.pay;
+        if(players[player].balanceMoney <=0){
+          this.eliminatePlayer(player,players)
+        }else{
+          this.nextPlayer(false,player,players)
+        }
+      }
+      else if(this.state.buttonTag === 'COLLECT'){
+        players[player].balanceMoney +=this.state.currentChance.pay;
+        
+      }
+      else{
+        this.nextPlayer(false,player,players)
+      }
+    }
+    // this.nextPlayer(false,this.state.currentPlayer,this.state.players)
+  }
+
+
   render(){
-    console.log(this.state.currentPlayer)
+    // console.log(this.state.currentPlayer)
     return (
       <div className="App">
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+      />
         <Modal
           show = {this.state.propBuyModalOpen}
-          // show = {true}
+          // hidden = {true}
           handleClose = {this.closeModal}
         >
           <Card
@@ -183,6 +263,15 @@ class App extends React.Component{
             <div className='pass' onClick={this.closeModal}>PASS</div>
           </div>
           
+        </Modal>
+
+        <Modal className='chance-modal'
+          hidden={true}
+          show={this.state.chanceModalOpen}
+        >
+          <div>CHANCE CARD</div>
+          <span>{this.state.currentChance.description}</span>
+          <button onClick={this.processChance}>{this.state.currentChance.buttonTag}</button>
         </Modal>
         <div className="main">
           <div className="linetop blocks">

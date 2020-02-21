@@ -11,7 +11,8 @@ const blockList = [
         name:'OLD KENT ROAD',
         color:'brown',
         rent: 120,
-        cost: 1200
+        cost: 1200,
+        
     },
     {
         id:3,
@@ -25,7 +26,8 @@ const blockList = [
         name:'WHITE CHAPEL ROAD',
         color:'brown',
         rent: 163.8,
-        cost: 1638
+        cost: 1638,
+        
     },
     {
         id:5,
