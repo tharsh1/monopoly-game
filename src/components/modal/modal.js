@@ -10,16 +10,15 @@ class Modal extends React.Component{
     }
 
     render(){
-        console.log(this.props.show)
         return(
-            <div className = {this.props.show ? 'back display-true': 'back display-hide'}>
+            <div className = {(this.props.show ? 'back display-true': 'back display-hide') + " " + this.props.className}>
 
             <div className = 'modal'>
-                <img className='close' src={cancel} onClick={this.props.handleClose} alt=""/>
+                <img className='close' hidden={this.props.hidden} src={cancel} onClick={this.props.handleClose} alt=""/>
                 {this.props.children}
             </div>
             </div>
-        )
+        );
     }
 }
 
