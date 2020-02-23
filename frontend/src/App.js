@@ -42,11 +42,6 @@ class App extends React.Component{
       playerNames:[{name:'Sheldon',color:'darkred'},{name:'Leonard',color:'green'},{name:'Howard',color:'blue'},{name:'Raj',color:'black'}]
     };
 
-    // toast.configure({
-    //   autoClose:10000,
-    //   position:toast.POSITION.BOTTOM_RIGHT
-    // });
-
     this.movePawn = this.movePawn.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.selectPawn = this.selectPawn.bind(this);
@@ -56,7 +51,6 @@ class App extends React.Component{
     this.eliminatePlayer = this.eliminatePlayer.bind(this);
     this.processChance = this.processChance.bind(this);
     this.getPlayer = this.getPlayer.bind(this);
-    // this.displayBuyModal = this.displayBuyModal.bind(this);
   }
 
   componentDidMount(){
@@ -64,7 +58,6 @@ class App extends React.Component{
   }
 
   movePawn(player,dice1,dice2){
-    // console.log(player);
     const blocks = this.state.blocks;
     const players = this.state.players;
     let newPlayerPosition = (players[player].position + dice1 + dice2) % 40;
@@ -78,7 +71,7 @@ class App extends React.Component{
 
 
     this.applyLogic(player, newPlayerPosition);
-    // console.log(this.state.currentPlayer);
+
   }
 
   selectPawn(blockId){
@@ -95,7 +88,6 @@ class App extends React.Component{
     const players = this.state.players;
     const blockInfo = this.state.blocks[newPlayerPosition];
     if(blockInfo.type === 'PROPERTY'){
-      // console.log(blockInfo.ownedBy)
       if(blockInfo.ownedBy === undefined){
         this.setState(
           {
@@ -109,14 +101,12 @@ class App extends React.Component{
           }
         );
       }else{
-        console.log('yess')
         toast('already bought',{type:toast.TYPE.INFO});
         this.nextPlayer(false,player,players)
       }
       
     }
     else if(blockInfo.type === 'JAIL'){
-      // console.log(players);
       players[player].balanceMoney -=3000;
       if(players[player].balanceMoney <=0){
         this.eliminatePlayer(player,players)
@@ -127,8 +117,6 @@ class App extends React.Component{
     else if(blockInfo.type === 'CHANCE'){
       const rand = Math.floor(Math.random() * chance.length);
       const currentChance = chance[rand];
-      console.log(currentChance)
-      console.log(rand)
       this.setState({
         modalName:'CHANCE CARD',
         chanceModalOpen:true,
@@ -169,9 +157,7 @@ class App extends React.Component{
     const blocks = this.state.blocks;
     toast(players[player].name + " is eliminated",{type:toast.TYPE.ERROR});
     const propertiesOwned = _.map(players[player].properties,obj => obj.id);
-    console.log(propertiesOwned);
     for(let property of propertiesOwned){
-      console.log(blocks)
       blocks[property-1].ownedBy = undefined;
     }
     this.setState({blocks});
@@ -183,7 +169,6 @@ class App extends React.Component{
   }
 
   nextPlayer(deletedthis , currentPlayer , players){
-    console.log(players)
     if(deletedthis){
       if(players.length - 1 === currentPlayer){
         this.setState({currentPlayer:0,players});
@@ -255,7 +240,6 @@ class App extends React.Component{
         this.nextPlayer(false,player,players)
       }
     }
-    // this.nextPlayer(false,this.state.currentPlayer,this.state.players)
   }
 
   getPlayer(playerId){
@@ -270,7 +254,6 @@ class App extends React.Component{
   }
 
   render(){
-    // console.log(this.state.currentPlayer)
     return (
       <div className="App">
         <ToastContainer
@@ -286,7 +269,6 @@ class App extends React.Component{
       />
         <Modal
           show = {this.state.propBuyModalOpen}
-          // hidden = {true}
           handleClose = {this.closeModal}
         >
           <Card

@@ -20,7 +20,6 @@
     width: 40%;
     display: flex;
     justify-content: center;
-    /* height: 75%; */
     margin: 0 0 0 5%;
     float: right;
 }
@@ -39,7 +38,6 @@
     justify-content: center;
 }
 .rollbtn{
-    /* margin: 8% 0%; */
     width: 80%;
     height: 70%;
     border: none;
@@ -54,6 +52,5 @@
     font-weight: 600;
     /* border: 1px solid red; */
     align-self: center;
-    /* height: 100%; */
 
 }

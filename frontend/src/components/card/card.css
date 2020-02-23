@@ -17,12 +17,10 @@
     background-color: darkorchid;
     border-bottom: 2px solid black;
     box-sizing: border-box;
-    /* border-radius: 10px 10px 0 0; */
 }
 .card h1{
     font-size: 1.6em;
     text-align: center;
-    /* margin-top: px; */
 }
 
 .card h1:last-child{

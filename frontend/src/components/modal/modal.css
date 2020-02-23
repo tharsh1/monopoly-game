@@ -1,7 +1,6 @@
 .modal{
     min-width: 30vw;
     max-width: 100%;
-    /* width: 90vw; */
     min-height: 20vh;
     max-height: 90vh;
     box-sizing: border-box;
