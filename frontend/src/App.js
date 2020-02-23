@@ -130,6 +130,7 @@ class App extends React.Component{
       console.log(currentChance)
       console.log(rand)
       this.setState({
+        modalName:'CHANCE CARD',
         chanceModalOpen:true,
         currentChance
       });
@@ -150,6 +151,14 @@ class App extends React.Component{
       }else{
         this.nextPlayer(false,player,players)
       }
+    }
+    else if(blockInfo.type === 'GO_TO_JAIL'){
+      const currentChance = chance[1]
+      this.setState({
+        modalName:'GO TO JAIL',
+        chanceModalOpen:true,
+        currentChance
+      });
     }
     else{
       this.nextPlayer(false,player,players)
@@ -303,7 +312,7 @@ class App extends React.Component{
           hidden={true}
           show={this.state.chanceModalOpen}
         >
-          <div>CHANCE CARD</div>
+          <div>{this.state.modalName}</div>
           <span>{this.state.currentChance.description}</span>
           <button onClick={this.processChance}>{this.state.currentChance.buttonTag}</button>
         </Modal>

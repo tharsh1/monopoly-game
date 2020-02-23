@@ -248,7 +248,7 @@ const blockList = [
     {
         id:31,
         playersOnBlock:[],
-        type:'GOT_TO_JAIL'
+        type:'GO_TO_JAIL'
     },
     {
         id:32,
