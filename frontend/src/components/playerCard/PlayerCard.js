@@ -12,8 +12,9 @@ class PlayerCard extends React.Component{
         for(let property of this.props.properties){
             propertyList.push(
                 <div>
-                    <li>{property.name}
-                    <span class="badge">&pound;{property.rent}</span>
+                    <li>
+                        <div className='propertyname'>{property.name}</div>
+                        <span class="badge">&pound;{property.rent}</span>
                     </li>
                 </div>
             );
@@ -23,19 +24,19 @@ class PlayerCard extends React.Component{
 
     render(){
         return (
-            <div className='player1-container' style={{border: `${this.props.currentPlayer ? '2px solid ' + this.props.playerColor : '1px solid gray'}`}}>
-                <div className='player1-bar' style={{backgroundColor:this.props.playerColor}}>
-                    <div className='player1-name'>
+            <div className='player-container' style={{border: `${this.props.currentPlayer ? '2px solid ' + this.props.playerColor : '1px solid gray'}`}}>
+                <div className='player-bar' style={{backgroundColor:this.props.playerColor}}>
+                    <div className='player-name'>
                         {this.props.name}
                     </div>
                     
-                    <div className='player1-balance'>
+                    <div className='player-balance'>
                         {this.props.balance > 0 ? + this.props.balance+'.00' : 'Eliminated'}
                     </div>
                 </div>
                 <div className='FixedHeightContainer'>
                 
-                    <div className='player1-property'>
+                    <div className='player-property'>
                     <ul class="list-group">
                         {this.listProperties()}
                     </ul> 
