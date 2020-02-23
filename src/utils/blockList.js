@@ -309,7 +309,7 @@ const blockList = [
     {
         id:39,
         playersOnBlock:[],
-        type:'INCOME_TAX'
+        type:'SUPER_TAX'
     },
     {
         id:40,

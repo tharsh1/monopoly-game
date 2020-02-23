@@ -20,12 +20,12 @@ class Dice extends React.Component{
 
         this.setState({modalIsOpen : true});
         this.setState({diceState :{dice1: diceStates[dice1Val], dice2:diceStates[dice2Val]}});
-        // if(!this.once){
+        if(!this.once){
             this.props.movePawn(this.props.player,dice1Val,dice2Val);
-        // }else{
-        //     this.props.movePawn(this.props.player,10,0);
-        //     this.once = false;
-        // }
+        }else{
+            this.props.movePawn(this.props.player,38,0);
+            this.once = false;
+        }
         // if(this.state.currentPlayer.id !== this.props.players.length){
         //     this.setState({currentPlayer : this.props.players[this.state.currentPlayer.id]});
         // }

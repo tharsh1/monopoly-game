@@ -105,7 +105,7 @@
 
 .blocks div img{
     /* border: 1px solid green; */
-    max-width: 100%;
+    max-width: 25%;
     transform: rotate(180deg);
 
 }

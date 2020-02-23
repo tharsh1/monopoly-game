@@ -84,11 +84,9 @@ class App extends React.Component{
   selectPawn(blockId){
     const playersOnBlock = this.state.blocks[blockId-1].playersOnBlock
     let pawns = [];
-    const width = 100/playersOnBlock;
-
     const pawnImgs = [player1,player2,player3,player4]
     for (const player of playersOnBlock){
-      pawns.push(<img style={{width:`${width}%`}} key={player} src = {pawnImgs[player]} alt=""/>);
+      pawns.push(<img key={player} src = {pawnImgs[player]} alt=""/>);
     }
     return pawns
   }
@@ -118,7 +116,8 @@ class App extends React.Component{
       
     }
     else if(blockInfo.type === 'JAIL'){
-      players[player].balanceMoney -=15000;
+      // console.log(players);
+      players[player].balanceMoney -=3000;
       if(players[player].balanceMoney <=0){
         this.eliminatePlayer(player,players)
       }else{
@@ -135,6 +134,22 @@ class App extends React.Component{
         currentChance
       });
       
+    }
+    else if(blockInfo.type === 'INCOME_TAX'){
+      players[player].balanceMoney -=493;
+      if(players[player].balanceMoney <=0){
+        this.eliminatePlayer(player,players)
+      }else{
+        this.nextPlayer(false,player,players)
+      }
+    }
+    else if(blockInfo.type === 'SUPER_TAX'){
+      players[player].balanceMoney -=2662;
+      if(players[player].balanceMoney <=0){
+        this.eliminatePlayer(player,players)
+      }else{
+        this.nextPlayer(false,player,players)
+      }
     }
     else{
       this.nextPlayer(false,player,players)
@@ -159,6 +174,7 @@ class App extends React.Component{
   }
 
   nextPlayer(deletedthis , currentPlayer , players){
+    console.log(players)
     if(deletedthis){
       if(players.length - 1 === currentPlayer){
         this.setState({currentPlayer:0,players});
