@@ -23,7 +23,7 @@ class Dice extends React.Component{
         // if(!this.once){
             this.props.movePawn(this.props.player,dice1Val,dice2Val);
         // }else{
-        //     this.props.movePawn(this.props.player,7,0);
+        //     this.props.movePawn(this.props.player,10,0);
         //     this.once = false;
         // }
         // if(this.state.currentPlayer.id !== this.props.players.length){

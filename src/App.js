@@ -22,6 +22,7 @@ class App extends React.Component{
     this.state={
       propBuyModalOpen:false,
       chanceModalOpen:false,
+      winnerModalOpen:false,
       blocks ,
       currentChance:{},
       currentBlock:{},
@@ -33,10 +34,12 @@ class App extends React.Component{
         price:0
       },
       players:[
-        {id:0,name: "deepanshu",position: 0,balanceMoney: 15000,properties:[{id:2},{id:4}]},
-        {id:1,name: "abc",position: 0,balanceMoney:15000,properties:[]},
-        {id:2,name: "def",position:0,balanceMoney: 15000,properties:[]},
-        {id:3,name: "ghi",position:0,balanceMoney: 15000,properties:[]}]
+        {id:0,name: "Sheldon",playerColor:'red',position: 0,balanceMoney: 15000,properties:[]},
+        {id:1,name: "Leonard",playerColor:'green',position: 0,balanceMoney:15000,properties:[]},
+        {id:2,name: "Howard",playerColor:'blue',position:0,balanceMoney: 15000,properties:[]},
+        {id:3,name: "Raj",playerColor:"yellow",position:0,balanceMoney: 15000,properties:[]}
+      ],
+      playerNames:[{name:'Sheldon',color:'darkred'},{name:'Leonard',color:'green'},{name:'Howard',color:'blue'},{name:'Raj',color:'black'}]
     };
 
     // toast.configure({
@@ -51,7 +54,8 @@ class App extends React.Component{
     this.buyProperty = this.buyProperty.bind(this);
     this.nextPlayer = this.nextPlayer.bind(this);
     this.eliminatePlayer = this.eliminatePlayer.bind(this);
-    this.processChance = this.processChance.bind(this)
+    this.processChance = this.processChance.bind(this);
+    this.getPlayer = this.getPlayer.bind(this);
     // this.displayBuyModal = this.displayBuyModal.bind(this);
   }
 
@@ -80,10 +84,11 @@ class App extends React.Component{
   selectPawn(blockId){
     const playersOnBlock = this.state.blocks[blockId-1].playersOnBlock
     let pawns = [];
+    const width = 100/playersOnBlock;
 
     const pawnImgs = [player1,player2,player3,player4]
     for (const player of playersOnBlock){
-      pawns.push(<img key={player} src = {pawnImgs[player]} alt=""/>);
+      pawns.push(<img style={{width:`${width}%`}} key={player} src = {pawnImgs[player]} alt=""/>);
     }
     return pawns
   }
@@ -147,7 +152,10 @@ class App extends React.Component{
     }
     this.setState({blocks});
     players.splice(player,1);
-    this.nextPlayer(true,player,players)
+    if(players.length == 1){
+      this.setState({winnerModalOpen:true});
+    }
+    this.nextPlayer(true,player,players);
   }
 
   nextPlayer(deletedthis , currentPlayer , players){
@@ -225,6 +233,16 @@ class App extends React.Component{
     // this.nextPlayer(false,this.state.currentPlayer,this.state.players)
   }
 
+  getPlayer(playerId){
+    const player = this.state.players.find(player=>player.id === playerId);
+    if(player !== undefined){
+      return {properties:player.properties , balance: player.balanceMoney}
+    }
+    else{
+      return{properties:[], balance:0}
+    }
+    
+  }
 
   render(){
     // console.log(this.state.currentPlayer)
@@ -272,6 +290,15 @@ class App extends React.Component{
           <div>CHANCE CARD</div>
           <span>{this.state.currentChance.description}</span>
           <button onClick={this.processChance}>{this.state.currentChance.buttonTag}</button>
+        </Modal>
+
+        <Modal
+          className='winner-modal'
+          show = {this.state.winnerModalOpen}
+          hidden={true}
+        >
+          <h2>{this.state.players[0].name} is the winner.</h2>
+          <button onClick={this.closeModal}>END GAME</button>
         </Modal>
         <div className="main">
           <div className="linetop blocks">
@@ -341,12 +368,36 @@ class App extends React.Component{
   
           <div className="content">
               <div className="player-row1">
-                  <PlayerCard currentPlayer={this.state.players[this.state.currentPlayer].id === 0}/>
-                  <PlayerCard  currentPlayer={this.state.players[this.state.currentPlayer].id === 1}/>
+                  <PlayerCard 
+                    playerColor={this.state.playerNames[0].color} 
+                    currentPlayer={this.state.players[this.state.currentPlayer].id === 0}
+                    properties = {this.getPlayer(0).properties}
+                    name = {this.state.playerNames[0].name}
+                    balance = {this.getPlayer(0).balance}
+                  />
+                  <PlayerCard 
+                    playerColor={this.state.playerNames[1].color} 
+                    currentPlayer={this.state.players[this.state.currentPlayer].id === 1}
+                    properties = {this.getPlayer(1).properties}
+                    name = {this.state.playerNames[1].name}
+                    balance = {this.getPlayer(1).balance}
+                  />
               </div>
               <div className="player-row2">
-                  <PlayerCard currentPlayer={this.state.players[this.state.currentPlayer].id === 2}/>
-                  <PlayerCard currentPlayer={this.state.players[this.state.currentPlayer].id === 3}/>    
+                  <PlayerCard
+                    playerColor={this.state.playerNames[2].color}
+                    currentPlayer={this.state.players[this.state.currentPlayer].id === 2}
+                    properties = {this.getPlayer(2).properties}
+                    name = {this.state.playerNames[2].name}
+                    balance = {this.getPlayer(2).balance}
+                  />
+                  <PlayerCard 
+                    playerColor={this.state.playerNames[3].color} 
+                    currentPlayer={this.state.players[this.state.currentPlayer].id === 3}
+                    properties = {this.getPlayer(3).properties}
+                    name = {this.state.playerNames[3].name}
+                    balance = {this.getPlayer(3).balance}
+                  />    
               </div>
           </div>
          

@@ -1,10 +1,10 @@
 
 
 .player1-container, .player2-container, .player3-container, .player4-container{
-    width: 50%;
+    width: 48% !important;
     height: 95%;
     border-radius: 10px;
-    margin: 1%;
+    /* margin: 0.7%; */
     align-content: center;
 }
 .player1-bar, .player2-bar, .player3-bar, .player4-bar{
@@ -12,7 +12,7 @@
     height: 15%;
     background-color: green;
     border: 2px darkgreen;
-    border-radius: 7px;
+    border-radius: 7px 7px 0 0;
     display: flex;
     color: white;
 }
@@ -43,12 +43,11 @@
     height: 82%;
     width:97%; 
     padding:3px; 
-    background: blue;
-    border: 2px solid darkblue;
+    /* background: blue; */
+    /* border: 2px solid darkblue; */
     display:flex;
     border-radius: 10px;
     font-size: 15px;
-    color: white;
     overflow:scroll;
 }
 .player1-property, .player2-property, .player3-property, .player4-property
@@ -68,6 +67,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 40px;
     margin: 0 0 3px 0;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .list-group .badge {
-    background-color: purple;
+    background-color: darkred;
     color: #fff;
     font-weight: bold;
     font-size: 80%;
