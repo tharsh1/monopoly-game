@@ -101,8 +101,23 @@ class App extends React.Component{
           }
         );
       }else{
-        toast('already bought',{type:toast.TYPE.INFO});
-        this.nextPlayer(false,player,players)
+        const currentPlayer = players[player];
+        const ownerIndex = _.findIndex(players,player=>{
+          return player.id === blockInfo.ownedBy
+        });
+        const owner = players[ownerIndex];
+        currentPlayer.balanceMoney -= blockInfo.rent;
+        owner.balanceMoney += blockInfo.rent;
+        toast('rent of ' + blockInfo.rent + ' paid to ' + owner.name + ' from ' + currentPlayer.name,{type:toast.TYPE.INFO});
+        if(players[player].balanceMoney <=0){
+          this.eliminatePlayer(player,players)
+        }else{
+          this.nextPlayer(false,player,players)
+        }
+        players[player] = currentPlayer;
+        players[ownerIndex] = owner;
+        this.setState({players});
+        console.log(this.state.players);
       }
       
     }

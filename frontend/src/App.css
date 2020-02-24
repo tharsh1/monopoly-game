@@ -107,6 +107,7 @@
     /* border: 1px solid green; */
     max-width: 25%;
     transform: rotate(180deg);
+    background-color: rgb(255,255,255);
 
 }
 .blocks div{
