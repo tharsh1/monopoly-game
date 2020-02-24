@@ -12,8 +12,9 @@ import player2 from '../../resources/green-pawn.svg';
 import player3 from '../../resources/blue-pawn.svg';
 import player4 from '../../resources/yellow-pawn.svg';
 import buyicon from '../../resources/buyicon.svg';
-import blocks from '../../utils/blockList'
-import chance from '../../utils/chanceList'
+import blocks from '../../utils/blockList';
+import chance from '../../utils/chanceList';
+import communityChest from '../../utils/communityChestList';
 
 import './game.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,9 +25,11 @@ class Game extends React.Component{
     this.state={
       propBuyModalOpen:false,
       chanceModalOpen:false,
+      communiyModelOpen:false,
       winnerModalOpen:false,
       blocks ,
       currentChance:{},
+      currentCommunity:{},
       currentBlock:{},
       currentPlayer : 0,
       cardState:{
@@ -52,6 +55,7 @@ class Game extends React.Component{
     this.nextPlayer = this.nextPlayer.bind(this);
     this.eliminatePlayer = this.eliminatePlayer.bind(this);
     this.processChance = this.processChance.bind(this);
+    this.processCommunityChest = this.processCommunityChest.bind(this);
     this.getPlayer = this.getPlayer.bind(this);
     this.saveState = this.saveState.bind(this);
     this.exitGame = this.exitGame.bind(this);
@@ -149,6 +153,16 @@ class Game extends React.Component{
         modalName:'CHANCE CARD',
         chanceModalOpen:true,
         currentChance
+      });
+      
+    }
+    else if(blockInfo.type === 'COMMUNITY_CHEST'){
+      const rand = Math.floor(Math.random() * chance.length);
+      const currentCommunity = communityChest[rand];
+      this.setState({
+        modalName:'COMMUNITY CHEST CARD',
+        communityModalOpen:true,
+        currentCommunity
       });
       
     }
@@ -270,6 +284,41 @@ class Game extends React.Component{
     }
   }
 
+  processCommunityChest(){
+    this.setState({communityModalOpen:false});
+    if(this.state.currentCommunity.move){
+      const finalPosition = this.state.currentCommunity.goToPosition;
+      const currentPosition = this.state.players[this.state.currentPlayer].position;
+      let moves = 0;
+      if(finalPosition > currentPosition){
+        moves = finalPosition-currentPosition;
+      }
+      else{
+        moves = (40-currentPosition) + finalPosition;
+      }
+      this.movePawn(this.state.currentPlayer , moves,0);
+    }
+    else{
+      const player = this.state.currentPlayer;
+      const players = this.state.players;
+      if(this.state.currentCommunity.buttonTag === 'PAY'){
+        players[player].balanceMoney -=this.state.currentCommunity.pay;
+        if(players[player].balanceMoney <=0){
+          this.eliminatePlayer(player,players)
+        }else{
+          this.nextPlayer(false,player,players)
+        }
+      }
+      else if(this.state.currentCommunity.buttonTag === 'COLLECT'){
+        players[player].balanceMoney +=this.state.currentCommunity.get;
+        
+      }
+      else{
+        this.nextPlayer(false,player,players)
+      }
+    }
+  }
+
   getPlayer(playerId){
     const player = this.state.players.find(player=>player.id === playerId);
     if(player !== undefined){
@@ -348,6 +397,15 @@ class Game extends React.Component{
           <div>{this.state.modalName}</div>
           <span>{this.state.currentChance.description}</span>
           <button onClick={this.processChance}>{this.state.currentChance.buttonTag}</button>
+        </Modal>
+
+        <Modal className='chance-modal'
+          hidden={true}
+          show={this.state.communityModalOpen}
+        >
+          <div>{this.state.modalName}</div>
+          <span>{this.state.currentCommunity.description}</span>
+          <button onClick={this.processCommunityChest}>{this.state.currentCommunity.buttonTag}</button>
         </Modal>
 
         {/* <Modal className='chance-modal'

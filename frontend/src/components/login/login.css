@@ -1,0 +1,52 @@
+.login-container {
+    height: 300px;
+    width: 350px;
+    margin: auto;
+    margin-top: 10%;
+    background: lightgreen;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid darkgreen;
+}
+
+.gameName {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: darkred
+}
+
+.newGameBtn {
+    border: none;
+    height: 40px;
+    width: 200px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: darkgreen;
+    font-size: 15px;
+    color: white;
+}
+
+.loadGameBtn {
+    border: none;
+    height: 40px;
+    width: 200px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: darkslateblue;
+    font-size: 15px;
+    color: white;
+}
+
+#gameID {
+    border: none;
+    height: 40px;
+    width: 200px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 3px;
+    visibility: hidden;
+}
