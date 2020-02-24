@@ -162,7 +162,7 @@ class App extends React.Component{
     }
     this.setState({blocks});
     players.splice(player,1);
-    if(players.length == 1){
+    if(players.length === 1){
       this.setState({winnerModalOpen:true});
     }
     this.nextPlayer(true,player,players);
@@ -281,7 +281,7 @@ class App extends React.Component{
           <div className='buy-modal-right'>
             <div className = 'buybox' onClick={this.buyProperty}>
               <div>
-                <img src={buyicon}/>
+                <img src={buyicon} alt=""/>
                 <span>BUY PROPERTY</span>
               </div>
             </div>

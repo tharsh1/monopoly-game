@@ -11,10 +11,10 @@ class PlayerCard extends React.Component{
         let propertyList = [];
         for(let property of this.props.properties){
             propertyList.push(
-                <div>
+                <div key={property.id}>
                     <li>
                         <div className='propertyname'>{property.name}</div>
-                        <span class="badge">&pound;{property.rent}</span>
+                        <span className="badge">&pound;{property.rent}</span>
                     </li>
                 </div>
             );
@@ -37,7 +37,7 @@ class PlayerCard extends React.Component{
                 <div className='FixedHeightContainer'>
                 
                     <div className='player-property'>
-                    <ul class="list-group">
+                    <ul className="list-group">
                         {this.listProperties()}
                     </ul> 
                        
