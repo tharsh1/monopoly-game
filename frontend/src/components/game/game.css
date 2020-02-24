@@ -1,0 +1,236 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
+
+::-webkit-scrollbar{
+    display: none
+}
+.main{
+    width: 100vh;
+    height: 100vh;
+    margin-left: 1vw;
+    /* background-color: red; */
+    background-image: url('../../resources/monopoly-board.jpg');
+    background-size: 100% 100%;
+}
+.linetop{
+    height: 10.5vh;
+    width: 100%;
+    /* border: 1px solid blue; */
+    display: flex;
+}
+.linetop div{
+    width: 8.2%;
+    box-sizing: border-box;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+
+.linetop div:first-child, .linetop div:last-child{
+    width: 13%;
+}
+.lineleft{
+    width: 10.5vh;
+    height: 79vh;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    float: left;
+}
+.lineleft div{
+    width: 100%;
+    height: 10.1%;
+    /* border: 1px solid blue; */
+}
+.lineleft div:first-child, .lineleft div:last-child{
+    /* width: 2%; */
+    height: 3.5%;
+}
+.lineright{
+    float: right;
+    margin-right: .3%;
+}
+.main{
+    transform: rotate(180deg);
+    float: left;
+    margin-right: 0;
+}
+.right{
+    background-color: lightblue;
+    height: 100vh;
+    width: 49.3%;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    /* width: calc(100vh-1%); */
+}
+.appbar{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    background-color: lightcoral;
+}
+.content{
+    width: 100%;
+    height: 40px;
+    flex-grow: 4;
+    /* border: 1px solid green; */
+}
+
+.appbtn{
+    width: 25%;
+    margin: 1% 3%;
+    height: 70%;
+    border-radius: 10px;
+    background-color: darkred;
+    border: none;
+    font-size: 18px;
+    color: white;
+}
+
+.player-row1, .player-row2{
+    width: 99%;
+    height: 50%;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.blocks div img{
+    /* border: 1px solid green; */
+    max-width: 25%;
+    transform: rotate(180deg);
+    border: 1px solid red;
+    /* background-color: rgba(255,0,0,0.3); */
+
+}
+.blocks div{
+    display: flex;
+    flex-direction: row-reverse;
+    /* justify-content: center; */
+    /* margin-left: -10px; */
+}
+.player1-container, .player2-container, .player3-container, .player4-container{
+    width: 49%;
+    height: 95%;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 1%;
+}
+.player2-container, .player4-container{
+    float: right;
+}
+
+.buybox{
+    width: 100%;
+    height: 240px;
+    display: flex;
+    border: 1px solid green;
+    margin: 5px;
+    justify-content: center;
+    box-sizing: border-box;
+    /* padding: 30px; */
+    background-color: lightgreen;
+    overflow: hidden;
+    align-content: center;
+    transition: 500ms ease-in-out;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.buybox div span{
+    width:100%;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+    bottom: 0;
+}
+.buybox div img{
+    margin-top: 20%;
+}
+
+.buybox div{
+    transition: 400ms ease-in-out;
+}
+.buybox:hover div{
+    transform: scale(1.05);
+}
+.buybox:hover{
+    transform: scale(1.03);
+}
+.buy-modal-right{
+    width: 200px;
+    height: 300px;
+    box-sizing: border-box;
+    padding-right: 10px;
+}
+
+.buy-modal-right .pass{
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.3em;
+    /* font-weight: bold; */
+    /* color: white; */
+    background-color: lightcoral;
+    box-sizing: border-box;
+    margin:10px 5px;
+    border: 1px solid red;
+    transition: 300ms ease-in-out;
+    border-radius: 10px;
+}
+.buy-modal-right .pass:hover{
+    transform: scale(1.03);
+}
+
+.chance-modal .modal{
+    flex-direction: column;
+}
+
+.chance-modal .modal button{
+    padding: 7px;
+    margin: auto 10px 10px 10px;
+    background-color: lightcoral;
+    border: 1px solid red;
+    font-size: 1.2em;
+    border-radius: 5px;
+    transition: 300ms ease-in-out;
+}
+
+.chance-modal .modal button:hover{
+    transform: scale(1.05);
+}
+
+.chance-modal .modal span{
+    width: 100%;
+    box-sizing: border-box;
+    padding:10px;
+    margin: 0  0 30px 0;
+
+}
+
+.chance-modal .modal div{
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    background-color: black;
+    color: white;
+    
+    /* font-weight: bold; */
+    font-size: 20px;
+    /* margin: 10px 10px 10px 10px; */
+}
