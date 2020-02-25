@@ -39,10 +39,10 @@ class Game extends React.Component{
         price:0
       },
       players:[
-        {id:0,name: "Sheldon",playerColor:'red',position: 0,balanceMoney: 15000,properties:[]},
-        {id:1,name: "Leonard",playerColor:'green',position: 0,balanceMoney:15000,properties:[]},
-        {id:2,name: "Howard",playerColor:'blue',position:0,balanceMoney: 15000,properties:[]},
-        {id:3,name: "Raj",playerColor:"yellow",position:0,balanceMoney: 15000,properties:[]}
+        {id:0,name: "Sheldon",playerColor:'red',position: 0,balanceMoney: 15000,properties:[],rounds:0, steps:0},
+        {id:1,name: "Leonard",playerColor:'green',position: 0,balanceMoney:15000,properties:[],rounds:0, steps:0},
+        {id:2,name: "Howard",playerColor:'blue',position:0,balanceMoney: 15000,properties:[],rounds:0, steps:0},
+        {id:3,name: "Raj",playerColor:"yellow",position:0,balanceMoney: 15000,properties:[],rounds:0, steps:0}
       ],
       playerNames:[{name:'Sheldon',color:'darkred'},{name:'Leonard',color:'green'},{name:'Howard',color:'blue'},{name:'Raj',color:'black'}]
     };
@@ -78,13 +78,18 @@ class Game extends React.Component{
     const blocks = this.state.blocks;
     const players = this.state.players;
     let newPlayerPosition = (players[player].position + dice1 + dice2) % 40;
+    players[player].steps += dice1 + dice2;
+    if(players[player].steps/40 > players[player].rounds){
+      players[player].rounds++;
+      players[player].balanceMoney += 200;
+    }
 
     blocks[players[player].position].playersOnBlock = _.filter(blocks[players[player].position].playersOnBlock , (obj)=>{
       return obj !== players[player].id;
     });
     blocks[newPlayerPosition].playersOnBlock.push(players[player].id);
     players[player].position = newPlayerPosition;
-    this.setState({blocks , currentBlock: blocks[newPlayerPosition] , currentPlayer:player});
+    this.setState({players,blocks , currentBlock: blocks[newPlayerPosition] , currentPlayer:player});
 
 
     this.applyLogic(player, newPlayerPosition);
