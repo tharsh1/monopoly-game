@@ -234,3 +234,72 @@
     font-size: 20px;
     /* margin: 10px 10px 10px 10px; */
 }
+
+.login-container .modal{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    background-color: lightgreen;
+}
+
+.login-container .modal h1 {
+    margin-bottom: 10px;
+    color: darkred;
+}
+
+.players-container .modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgray;
+}
+
+.players-container .modal h1 {
+    margin-bottom: 10px;
+    color: darkred;
+}
+
+.players-container .model .players-form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.player-red-field {
+    background-color: lightcoral;
+}
+
+.player-green-field {
+    background-color: lightgreen;
+}
+
+.player-blue-field {
+    background-color: lightblue;
+}
+
+.player-yellow-field {
+    background-color: lightgoldenrodyellow;
+}
+
+.player-red-field, .player-green-field, .player-blue-field, .player-yellow-field {
+    border: 2px solid darkslateblue;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    font-size: 15px;
+    font-weight: bold;
+    outline: none;
+}
+
+.startGameBtn {
+    margin: 10px;
+    width: 150px;
+    margin-left: 50px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 10px;
+    background-color: forestgreen;
+    color: white;
+    border: none;
+    outline: none;
+}

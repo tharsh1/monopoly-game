@@ -1,10 +1,10 @@
 import React from 'react';
 import {ToastContainer,toast} from 'react-toastify';
-import { Switch, Route } from 'react-router-dom'
+
 import _ from 'lodash';
 import Dice from '../dice/dice';
 import Card from '../card/Card';
-import Login from '../login/login';
+
 import Modal from '../modal/modal'
 import PlayerCard from '../playerCard/PlayerCard'
 import player1 from '../../resources/red-pawn.svg';
@@ -12,7 +12,7 @@ import player2 from '../../resources/green-pawn.svg';
 import player3 from '../../resources/blue-pawn.svg';
 import player4 from '../../resources/yellow-pawn.svg';
 import buyicon from '../../resources/buyicon.svg';
-import blocks from '../../utils/blockList';
+import blocks from '../../utils/blockList'; 
 import chance from '../../utils/chanceList';
 import communityChest from '../../utils/communityChestList';
 
@@ -23,6 +23,8 @@ class Game extends React.Component{
   constructor(props){
     super(props);
     this.state={
+      newGameModelOpen:true,
+      playersModelOpen:false,
       propBuyModalOpen:false,
       chanceModalOpen:false,
       communiyModelOpen:false,
@@ -59,6 +61,7 @@ class Game extends React.Component{
     this.getPlayer = this.getPlayer.bind(this);
     this.saveState = this.saveState.bind(this);
     this.exitGame = this.exitGame.bind(this);
+    this.closeNewGameModal = this.closeNewGameModal.bind(this);
   }
 
   componentDidMount(){
@@ -357,6 +360,10 @@ class Game extends React.Component{
     }
   }
 
+  closeNewGameModal(){
+    this.setState({newGameModelOpen:false,playersModelOpen:true})
+  }
+
 
   render(){
     return (
@@ -372,6 +379,30 @@ class Game extends React.Component{
           draggable
           pauseOnHover
       />
+
+      <Modal className="login-container"
+        hidden = {true}
+        show = {this.state.newGameModelOpen}
+      >
+          <h1>Monopoly London</h1>
+          <button class="newGameBtn">Resume Game</button>
+          <button onClick={this.closeNewGameModal} class="loadGameBtn">New Game</button>
+          
+      </Modal>
+      <Modal className="players-container"
+        hidden = {true}
+        show = {this.state.playersModelOpen}
+      >
+          <h1>Enter Player Details</h1>
+          <form className="players-form">
+            <input className="player-red-field" type="text" name="player1" placeholder="Enter Red Player Name"></input><br></br>
+            <input className="player-green-field" type="text" name="player2" placeholder="Enter Green Player Name"></input><br></br>
+            <input className="player-blue-field" type="text" name="player3" placeholder="Enter Blue Player Name"></input><br></br>
+            <input className="player-yellow-field" type="text" name="player4" placeholder="Enter Yellow Player Name"></input><br></br>
+            <input className="startGameBtn" type="submit" value="Start Game"></input>
+          </form>
+          
+      </Modal>
         <Modal
           show = {this.state.propBuyModalOpen}
           handleClose = {this.closeModal}

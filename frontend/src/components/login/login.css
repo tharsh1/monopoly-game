@@ -1,4 +1,4 @@
-.login-container {
+/* .login-container {
     height: 300px;
     width: 350px;
     margin: auto;
@@ -10,7 +10,7 @@
     display: flex;
     flex-wrap: wrap;
     border: 2px solid darkgreen;
-}
+} */
 
 .gameName {
     text-align: center;
