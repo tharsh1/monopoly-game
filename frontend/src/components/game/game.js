@@ -23,7 +23,7 @@ class Game extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      newGameModelOpen:true,
+      newGameModelOpen:false,
       playersModelOpen:false,
       propBuyModalOpen:false,
       chanceModalOpen:false,
@@ -62,6 +62,8 @@ class Game extends React.Component{
     this.saveState = this.saveState.bind(this);
     this.exitGame = this.exitGame.bind(this);
     this.closeNewGameModal = this.closeNewGameModal.bind(this);
+    //this.handlePlayer1 = this.handlePlayer1.bind(this);
+    //this.handleStartGame = this.handleStartGame.bind(this);
   }
 
   componentDidMount(){
@@ -147,7 +149,8 @@ class Game extends React.Component{
       
     }
     else if(blockInfo.type === 'JAIL'){
-      players[player].balanceMoney -=3000;
+      players[player].balanceMoney -=500;
+      toast(players[player].name+' paid 500 for bail',{type: toast.TYPE.INFO});
       if(players[player].balanceMoney <=0){
         this.eliminatePlayer(player,players)
       }else{
@@ -176,6 +179,7 @@ class Game extends React.Component{
     }
     else if(blockInfo.type === 'INCOME_TAX'){
       players[player].balanceMoney -=493;
+      toast(players[player].name+' paid 493 as Income Tax',{type: toast.TYPE.INFO});
       if(players[player].balanceMoney <=0){
         this.eliminatePlayer(player,players)
       }else{
@@ -184,6 +188,7 @@ class Game extends React.Component{
     }
     else if(blockInfo.type === 'SUPER_TAX'){
       players[player].balanceMoney -=2662;
+      toast(players[player].name+' paid 2662 as Super Tax',{type: toast.TYPE.INFO});
       if(players[player].balanceMoney <=0){
         this.eliminatePlayer(player,players)
       }else{
@@ -245,6 +250,7 @@ class Game extends React.Component{
       currPlayer.balanceMoney -= currentBlock.cost;
       currPlayer.properties.push(currentBlock);
       currentBlock.ownedBy = players[this.state.currentPlayer].id;
+      toast(currPlayer.name+' paid ' + currentBlock.cost + ' for ' + currentBlock.name,{type: toast.TYPE.INFO});
       blocks[currentBlock.id-1] = currentBlock;
       players[this.state.currentPlayer] = currPlayer;
       this.setState({blocks,players});
@@ -276,6 +282,7 @@ class Game extends React.Component{
       const players = this.state.players;
       if(this.state.currentChance.buttonTag === 'PAY'){
         players[player].balanceMoney -=this.state.currentChance.pay;
+        toast(players[player].name+' paid ' + this.state.currentChance.pay + ' for CHANCE',{type: toast.TYPE.INFO});
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
         }else{
@@ -283,8 +290,8 @@ class Game extends React.Component{
         }
       }
       else if(this.state.buttonTag === 'COLLECT'){
-        players[player].balanceMoney +=this.state.currentChance.pay;
-        
+        players[player].balanceMoney +=this.state.currentChance.get;
+        toast(players[player].name+' collected ' + this.state.currentChance.get + ' from CHANCE',{type: toast.TYPE.INFO});
       }
       else{
         this.nextPlayer(false,player,players)
@@ -311,6 +318,7 @@ class Game extends React.Component{
       const players = this.state.players;
       if(this.state.currentCommunity.buttonTag === 'PAY'){
         players[player].balanceMoney -=this.state.currentCommunity.pay;
+        toast(players[player].name+' paid ' + this.state.currentCommunity.pay + ' for COMMUNITY CHEST',{type: toast.TYPE.INFO});
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
         }else{
@@ -319,7 +327,7 @@ class Game extends React.Component{
       }
       else if(this.state.currentCommunity.buttonTag === 'COLLECT'){
         players[player].balanceMoney +=this.state.currentCommunity.get;
-        
+        toast(players[player].name+' collected ' + this.state.currentCommunity.get + ' from COMMUNITY CHEST',{type: toast.TYPE.INFO});
       }
       else{
         this.nextPlayer(false,player,players)
@@ -364,7 +372,14 @@ class Game extends React.Component{
     this.setState({newGameModelOpen:false,playersModelOpen:true})
   }
 
-
+  /*handlePlayer1(event) {
+    const playerName = event.target.value;
+    this.setState({playerNames[0].name: playerNames})
+  }
+  
+  handleStartGame() {
+    this.setState({playersModelOpen:false})
+  }*/
   render(){
     return (
       <div className="App">
@@ -394,7 +409,7 @@ class Game extends React.Component{
         show = {this.state.playersModelOpen}
       >
           <h1>Enter Player Details</h1>
-          <form className="players-form">
+          <form className="players-form" onSubmit={this.handleStartGame}>
             <input className="player-red-field" type="text" name="player1" placeholder="Enter Red Player Name"></input><br></br>
             <input className="player-green-field" type="text" name="player2" placeholder="Enter Green Player Name"></input><br></br>
             <input className="player-blue-field" type="text" name="player3" placeholder="Enter Blue Player Name"></input><br></br>
