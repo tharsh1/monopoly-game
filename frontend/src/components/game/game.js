@@ -1,25 +1,27 @@
 import React from 'react';
 import {ToastContainer,toast} from 'react-toastify';
-
+import axios from 'axios';
 import _ from 'lodash';
+
 import Dice from '../dice/dice';
 import Card from '../card/Card';
-
 import Modal from '../modal/modal'
+
 import PlayerCard from '../playerCard/PlayerCard'
 import player1 from '../../resources/red-pawn.svg';
 import player2 from '../../resources/green-pawn.svg';
 import player3 from '../../resources/blue-pawn.svg';
 import player4 from '../../resources/yellow-pawn.svg';
 import buyicon from '../../resources/buyicon.svg';
+
 import blocks from '../../utils/blockList'; 
 import chance from '../../utils/chanceList';
 import communityChest from '../../utils/communityChestList';
-import axios from 'axios';
 
 import './game.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import config from '../../config';
 class Game extends React.Component{
   constructor(props){
     super(props);
@@ -340,18 +342,20 @@ class Game extends React.Component{
     
   }
 
-  saveState(){
+  async saveState(){
     localStorage.setItem('gameState',JSON.stringify(this.state));
+    const response = await axios.post(config.host +'/saveGame' ,{gameId: localStorage.currentGameId , state: this.state , winner: this.state.winner});
     toast('GAME SAVED SUCCESSFULLY',{type:toast.TYPE.SUCCESS});
   }
 
-  exitGame(){
+  async exitGame(){
     const sure = window.confirm('Are you sure you want to exit');
     if(sure){
       
       const save = window.confirm('do you want to save your game? ');
       if(save){
         localStorage.setItem('gameState' , JSON.stringify(this.state));
+        const response = await axios.post(config.host +'/saveGame' ,{gameId: localStorage.currentGameId , state: this.state , winner: this.state.winner});
       }
       else{
         localStorage.removeItem('gameState');
@@ -372,7 +376,7 @@ class Game extends React.Component{
   startGame = async (e)=>{
     e.preventDefault();
     const response = await axios.post(
-      'http://localhost:3000/startNewGame',
+      config.host + '/startNewGame',
       {
           state: this.state,
           winner:null
