@@ -31,7 +31,7 @@ class PlayerCard extends React.Component{
                     </div>
                     
                     <div className='player-balance'>
-                        {this.props.balance > 0 ? + this.props.balance+'.00' : 'Eliminated'}
+                        {this.props.balance > 0 ? + this.props.balance : 'Eliminated'}
                     </div>
                 </div>
                 <div className='FixedHeightContainer'>

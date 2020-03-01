@@ -137,6 +137,7 @@ class Game extends React.Component{
         const owner = players[ownerIndex];
         currentPlayer.balanceMoney -= blockInfo.rent;
         owner.balanceMoney += blockInfo.rent;
+        owner.balanceMoney = owner.balanceMoney.toFixed(2)
         toast('rent of ' + blockInfo.rent + ' paid to ' + owner.name + ' from ' + currentPlayer.name,{type:toast.TYPE.INFO});
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
@@ -207,7 +208,7 @@ class Game extends React.Component{
     }
   }
 
-  eliminatePlayer(player,players){
+  async eliminatePlayer(player,players){
     const blocks = this.state.blocks;
     toast(players[player].name + " is eliminated",{type:toast.TYPE.ERROR});
     const propertiesOwned = _.map(players[player].properties,obj => obj.id);
@@ -218,6 +219,16 @@ class Game extends React.Component{
     players.splice(player,1);
     if(players.length === 1){
       this.setState({winnerModalOpen:true});
+      this.setState({winner: players[0].name})
+      const response = await axios.post(
+        config.host +'/saveGame' ,
+        {
+          gameId: localStorage.currentGameId , 
+          state: this.state , 
+          winner: this.state.winner
+        }
+      );
+      localStorage.setItem('gameState',JSON.stringify(this.state));
     }
     this.nextPlayer(true,player,players);
   }
@@ -486,7 +497,7 @@ class Game extends React.Component{
           hidden={true}
         >
           <h2>{this.state.players[0].name} is the winner.</h2>
-          <button onClick={this.closeModal}>END GAME</button>
+          <button onClick={this.openNewGameModal}>END GAME</button>
         </Modal>
         <div className="main">
           <div className="linetop blocks">
