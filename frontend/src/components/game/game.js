@@ -1,24 +1,28 @@
 import React from 'react';
 import {ToastContainer,toast} from 'react-toastify';
-
+import axios from 'axios';
 import _ from 'lodash';
+
 import Dice from '../dice/dice';
 import Card from '../card/Card';
-
 import Modal from '../modal/modal'
+
 import PlayerCard from '../playerCard/PlayerCard'
 import player1 from '../../resources/red-pawn.svg';
 import player2 from '../../resources/green-pawn.svg';
 import player3 from '../../resources/blue-pawn.svg';
 import player4 from '../../resources/yellow-pawn.svg';
 import buyicon from '../../resources/buyicon.svg';
+
 import blocks from '../../utils/blockList'; 
 import chance from '../../utils/chanceList';
 import communityChest from '../../utils/communityChestList';
+import emptyState from '../../utils/emptyState';
 
 import './game.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import config from '../../config';
 class Game extends React.Component{
   constructor(props){
     super(props);
@@ -41,12 +45,12 @@ class Game extends React.Component{
         price:0
       },
       players:[
-        {id:0,name: "Sheldon",playerColor:'red',position: 0,balanceMoney: 15000,properties:[],rounds:0, steps:0},
-        {id:1,name: "Leonard",playerColor:'green',position: 0,balanceMoney:15000,properties:[],rounds:0, steps:0},
-        {id:2,name: "Howard",playerColor:'blue',position:0,balanceMoney: 15000,properties:[],rounds:0, steps:0},
-        {id:3,name: "Raj",playerColor:"yellow",position:0,balanceMoney: 15000,properties:[],rounds:0, steps:0}
+        {id:0,name: "Player 1",playerColor:'red',position: 0,balanceMoney: 15000,properties:[],rounds:0, steps:0},
+        {id:1,name: "Player 2",playerColor:'green',position: 0,balanceMoney:15000,properties:[],rounds:0, steps:0},
+        {id:2,name: "Player 3",playerColor:'blue',position:0,balanceMoney: 15000,properties:[],rounds:0, steps:0},
+        {id:3,name: "Player 4",playerColor:"yellow",position:0,balanceMoney: 15000,properties:[],rounds:0, steps:0}
       ],
-      playerNames:[{name:'Sheldon',color:'darkred'},{name:'Leonard',color:'green'},{name:'Howard',color:'blue'},{name:'Raj',color:'black'}]
+      playerNames:[{name:'Player1',color:'darkred'},{name:'Player2',color:'green'},{name:'Player3',color:'blue'},{name:'Player4',color:'black'}]
     };
 
     this.movePawn = this.movePawn.bind(this);
@@ -71,6 +75,7 @@ class Game extends React.Component{
     try{
       const gameState = JSON.parse(localStorage.gameState);
       this.setState(gameState)
+      toast("GAME " + localStorage.currentGameId + " LOADED",{type: toast.TYPE.INFO})
       console.log(this.state)
     
     }
@@ -135,6 +140,7 @@ class Game extends React.Component{
         const owner = players[ownerIndex];
         currentPlayer.balanceMoney -= blockInfo.rent;
         owner.balanceMoney += blockInfo.rent;
+        owner.balanceMoney = owner.balanceMoney.toFixed(2)
         toast('rent of ' + blockInfo.rent + ' paid to ' + owner.name + ' from ' + currentPlayer.name,{type:toast.TYPE.INFO});
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
@@ -208,7 +214,7 @@ class Game extends React.Component{
     }
   }
 
-  eliminatePlayer(player,players){
+  async eliminatePlayer(player,players){
     const blocks = this.state.blocks;
     toast(players[player].name + " is eliminated",{type:toast.TYPE.ERROR});
     const propertiesOwned = _.map(players[player].properties,obj => obj.id);
@@ -219,6 +225,16 @@ class Game extends React.Component{
     players.splice(player,1);
     if(players.length === 1){
       this.setState({winnerModalOpen:true});
+      this.setState({winner: players[0].name})
+      const response = await axios.post(
+        config.host +'/saveGame' ,
+        {
+          gameId: localStorage.currentGameId , 
+          state: this.state , 
+          winner: this.state.winner
+        }
+      );
+      localStorage.setItem('gameState',JSON.stringify(this.state));
     }
     this.nextPlayer(true,player,players);
   }
@@ -282,7 +298,11 @@ class Game extends React.Component{
       const players = this.state.players;
       if(this.state.currentChance.buttonTag === 'PAY'){
         players[player].balanceMoney -=this.state.currentChance.pay;
+<<<<<<< HEAD
         toast(players[player].name+' paid ' + this.state.currentChance.pay + ' for CHANCE',{type: toast.TYPE.INFO});
+=======
+        players[player].balanceMoney = players[player].balanceMoney.toFixed(2)
+>>>>>>> ee03a666be7fe8cce6883e1c067c8bfa17392463
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
         }else{
@@ -318,7 +338,11 @@ class Game extends React.Component{
       const players = this.state.players;
       if(this.state.currentCommunity.buttonTag === 'PAY'){
         players[player].balanceMoney -=this.state.currentCommunity.pay;
+<<<<<<< HEAD
         toast(players[player].name+' paid ' + this.state.currentCommunity.pay + ' for COMMUNITY CHEST',{type: toast.TYPE.INFO});
+=======
+        players[player].balanceMoney = players[player].balanceMoney.toFixed(2)
+>>>>>>> ee03a666be7fe8cce6883e1c067c8bfa17392463
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
         }else{
@@ -346,31 +370,62 @@ class Game extends React.Component{
     
   }
 
-  saveState(){
+  async saveState(){
     localStorage.setItem('gameState',JSON.stringify(this.state));
+    const response = await axios.post(config.host +'/saveGame' ,{gameId: localStorage.currentGameId , state: this.state , winner: this.state.winner});
     toast('GAME SAVED SUCCESSFULLY',{type:toast.TYPE.SUCCESS});
   }
 
-  exitGame(){
+  async exitGame(){
     const sure = window.confirm('Are you sure you want to exit');
     if(sure){
       
       const save = window.confirm('do you want to save your game? ');
       if(save){
         localStorage.setItem('gameState' , JSON.stringify(this.state));
+        const response = await axios.post(config.host +'/saveGame' ,{gameId: localStorage.currentGameId , state: this.state , winner: this.state.winner});
       }
       else{
         localStorage.removeItem('gameState');
-        
       }
-
-      window.location.href = '/login';
+      this.setState({newGameModelOpen:true})
     }
   }
 
   closeNewGameModal(){
     this.setState({newGameModelOpen:false,playersModelOpen:true})
   }
+  playerOnChange =  (e)=>{
+    const {players,playerNames} = this.state
+    players[e.target.name].name = e.target.value;
+    playerNames[e.target.name].name = e.target.value;
+    emptyState.players[e.target.name].name = e.target.value;
+    this.setState({players,playerNames});
+  }
+
+  startGame = async (e)=>{
+    e.preventDefault();
+    const response = await axios.post(
+      config.host + '/startNewGame',
+      {
+          state: emptyState,
+          winner:null
+      }
+    );
+    alert('Use game Id: ' + response.data.gameId);
+    localStorage.setItem('currentGameId', response.data.gameId);
+    const gameState = this.state;
+    gameState.newGameModelOpen = true;
+    // localStorage.setItem('gameState',JSON.stringify(gameState));
+    this.setState(emptyState);
+    toast('NEW GAME STARTED',{type:toast.TYPE.SUCCESS});
+  }
+
+  openNewGameModal = ()=>{
+    this.setState({newGameModelOpen:true , winnerModalOpen :false})
+    localStorage.removeItem('gameState')
+  }
+
 
   /*handlePlayer1(event) {
     const playerName = event.target.value;
@@ -409,12 +464,21 @@ class Game extends React.Component{
         show = {this.state.playersModelOpen}
       >
           <h1>Enter Player Details</h1>
+<<<<<<< HEAD
           <form className="players-form" onSubmit={this.handleStartGame}>
             <input className="player-red-field" type="text" name="player1" placeholder="Enter Red Player Name"></input><br></br>
             <input className="player-green-field" type="text" name="player2" placeholder="Enter Green Player Name"></input><br></br>
             <input className="player-blue-field" type="text" name="player3" placeholder="Enter Blue Player Name"></input><br></br>
             <input className="player-yellow-field" type="text" name="player4" placeholder="Enter Yellow Player Name"></input><br></br>
             <input className="startGameBtn" type="submit" value="Start Game"></input>
+=======
+          <form method='post' className="players-form" onSubmit = {this.startGame}>
+            <input className="player-red-field" onChange={this.playerOnChange} value={this.state.playerNames[0].name} type="text" name="0" placeholder="Enter Red Player Name"></input><br></br>
+            <input className="player-green-field" onChange={this.playerOnChange} value={this.state.playerNames[1].name} type="text" name="1" placeholder="Enter Green Player Name"></input><br></br>
+            <input className="player-blue-field" onChange={this.playerOnChange} value={this.state.playerNames[2].name} type="text" name="2" placeholder="Enter Blue Player Name"></input><br></br>
+            <input className="player-yellow-field" onChange={this.playerOnChange} value={this.state.playerNames[3].name} type="text" name="3" placeholder="Enter Yellow Player Name"></input><br></br>
+            <input className="startGameBtn" type="submit"  value="Start Game"></input>
+>>>>>>> ee03a666be7fe8cce6883e1c067c8bfa17392463
           </form>
           
       </Modal>
@@ -472,7 +536,7 @@ class Game extends React.Component{
           hidden={true}
         >
           <h2>{this.state.players[0].name} is the winner.</h2>
-          <button onClick={this.closeModal}>END GAME</button>
+          <button onClick={this.openNewGameModal}>END GAME</button>
         </Modal>
         <div className="main">
           <div className="linetop blocks">
@@ -537,6 +601,7 @@ class Game extends React.Component{
           <div className="appbar">
               <button onClick={this.saveState} className="appbtn">Save Game</button>
               <button onClick = {this.exitGame} className="appbtn">Exit Game</button>
+
           </div>
   
           <div className="content">
