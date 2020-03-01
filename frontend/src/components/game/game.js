@@ -17,6 +17,7 @@ import buyicon from '../../resources/buyicon.svg';
 import blocks from '../../utils/blockList'; 
 import chance from '../../utils/chanceList';
 import communityChest from '../../utils/communityChestList';
+import emptyState from '../../utils/emptyState';
 
 import './game.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -382,6 +383,7 @@ class Game extends React.Component{
     const {players,playerNames} = this.state
     players[e.target.name].name = e.target.value;
     playerNames[e.target.name].name = e.target.value;
+    emptyState.players[e.target.name].name = e.target.value;
     this.setState({players,playerNames});
   }
 
@@ -390,7 +392,7 @@ class Game extends React.Component{
     const response = await axios.post(
       config.host + '/startNewGame',
       {
-          state: this.state,
+          state: emptyState,
           winner:null
       }
     );
@@ -399,8 +401,13 @@ class Game extends React.Component{
     const gameState = this.state;
     gameState.newGameModelOpen = true;
     // localStorage.setItem('gameState',JSON.stringify(gameState));
+    this.setState(emptyState);
     toast('NEW GAME STARTED',{type:toast.TYPE.SUCCESS});
-    this.setState({playersModelOpen:false,newGameModelOpen:false});
+  }
+
+  openNewGameModal = ()=>{
+    this.setState({newGameModelOpen:true , winnerModalOpen :false})
+    localStorage.removeItem('gameState')
   }
 
 
