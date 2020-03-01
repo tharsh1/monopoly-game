@@ -292,6 +292,7 @@ class Game extends React.Component{
       const players = this.state.players;
       if(this.state.currentChance.buttonTag === 'PAY'){
         players[player].balanceMoney -=this.state.currentChance.pay;
+        players[player].balanceMoney = players[player].balanceMoney.toFixed(2)
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
         }else{
@@ -327,6 +328,7 @@ class Game extends React.Component{
       const players = this.state.players;
       if(this.state.currentCommunity.buttonTag === 'PAY'){
         players[player].balanceMoney -=this.state.currentCommunity.pay;
+        players[player].balanceMoney = players[player].balanceMoney.toFixed(2)
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
         }else{
