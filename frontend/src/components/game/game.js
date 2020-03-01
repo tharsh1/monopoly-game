@@ -360,6 +360,7 @@ class Game extends React.Component{
       else{
         localStorage.removeItem('gameState');
       }
+      this.setState({newGameModelOpen:true})
     }
   }
 
@@ -383,7 +384,7 @@ class Game extends React.Component{
       }
     );
     alert('Use game Id: ' + response.data.gameId);
-    // localStorage.setItem('currentGameId', response.data.gameId);
+    localStorage.setItem('currentGameId', response.data.gameId);
     const gameState = this.state;
     gameState.newGameModelOpen = true;
     // localStorage.setItem('gameState',JSON.stringify(gameState));
