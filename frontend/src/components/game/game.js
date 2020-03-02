@@ -27,7 +27,7 @@ class Game extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      newGameModelOpen:false,
+      newGameModelOpen:true,
       playersModelOpen:false,
       propBuyModalOpen:false,
       chanceModalOpen:false,
@@ -140,7 +140,6 @@ class Game extends React.Component{
         const owner = players[ownerIndex];
         currentPlayer.balanceMoney -= blockInfo.rent;
         owner.balanceMoney += blockInfo.rent;
-        owner.balanceMoney = owner.balanceMoney.toFixed(2)
         toast('rent of ' + blockInfo.rent + ' paid to ' + owner.name + ' from ' + currentPlayer.name,{type:toast.TYPE.INFO});
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
@@ -298,11 +297,7 @@ class Game extends React.Component{
       const players = this.state.players;
       if(this.state.currentChance.buttonTag === 'PAY'){
         players[player].balanceMoney -=this.state.currentChance.pay;
-<<<<<<< HEAD
         toast(players[player].name+' paid ' + this.state.currentChance.pay + ' for CHANCE',{type: toast.TYPE.INFO});
-=======
-        players[player].balanceMoney = players[player].balanceMoney.toFixed(2)
->>>>>>> ee03a666be7fe8cce6883e1c067c8bfa17392463
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
         }else{
@@ -338,11 +333,7 @@ class Game extends React.Component{
       const players = this.state.players;
       if(this.state.currentCommunity.buttonTag === 'PAY'){
         players[player].balanceMoney -=this.state.currentCommunity.pay;
-<<<<<<< HEAD
         toast(players[player].name+' paid ' + this.state.currentCommunity.pay + ' for COMMUNITY CHEST',{type: toast.TYPE.INFO});
-=======
-        players[player].balanceMoney = players[player].balanceMoney.toFixed(2)
->>>>>>> ee03a666be7fe8cce6883e1c067c8bfa17392463
         if(players[player].balanceMoney <=0){
           this.eliminatePlayer(player,players)
         }else{
@@ -400,6 +391,7 @@ class Game extends React.Component{
     players[e.target.name].name = e.target.value;
     playerNames[e.target.name].name = e.target.value;
     emptyState.players[e.target.name].name = e.target.value;
+    emptyState.playerNames[e.target.name].name = e.target.value;
     this.setState({players,playerNames});
   }
 
@@ -419,6 +411,7 @@ class Game extends React.Component{
     // localStorage.setItem('gameState',JSON.stringify(gameState));
     this.setState(emptyState);
     toast('NEW GAME STARTED',{type:toast.TYPE.SUCCESS});
+    console.log(this.state);
   }
 
   openNewGameModal = ()=>{
@@ -464,21 +457,12 @@ class Game extends React.Component{
         show = {this.state.playersModelOpen}
       >
           <h1>Enter Player Details</h1>
-<<<<<<< HEAD
-          <form className="players-form" onSubmit={this.handleStartGame}>
-            <input className="player-red-field" type="text" name="player1" placeholder="Enter Red Player Name"></input><br></br>
-            <input className="player-green-field" type="text" name="player2" placeholder="Enter Green Player Name"></input><br></br>
-            <input className="player-blue-field" type="text" name="player3" placeholder="Enter Blue Player Name"></input><br></br>
-            <input className="player-yellow-field" type="text" name="player4" placeholder="Enter Yellow Player Name"></input><br></br>
-            <input className="startGameBtn" type="submit" value="Start Game"></input>
-=======
           <form method='post' className="players-form" onSubmit = {this.startGame}>
             <input className="player-red-field" onChange={this.playerOnChange} value={this.state.playerNames[0].name} type="text" name="0" placeholder="Enter Red Player Name"></input><br></br>
             <input className="player-green-field" onChange={this.playerOnChange} value={this.state.playerNames[1].name} type="text" name="1" placeholder="Enter Green Player Name"></input><br></br>
             <input className="player-blue-field" onChange={this.playerOnChange} value={this.state.playerNames[2].name} type="text" name="2" placeholder="Enter Blue Player Name"></input><br></br>
             <input className="player-yellow-field" onChange={this.playerOnChange} value={this.state.playerNames[3].name} type="text" name="3" placeholder="Enter Yellow Player Name"></input><br></br>
             <input className="startGameBtn" type="submit"  value="Start Game"></input>
->>>>>>> ee03a666be7fe8cce6883e1c067c8bfa17392463
           </form>
           
       </Modal>
