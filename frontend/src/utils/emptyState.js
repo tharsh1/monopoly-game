@@ -6,6 +6,7 @@ const emptyState={
     chanceModalOpen:false,
     communiyModelOpen:false,
     winnerModalOpen:false,
+    gameIdModalOpen:false,
     blocks ,
     currentChance:{},
     currentCommunity:{},

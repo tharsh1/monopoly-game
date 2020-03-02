@@ -28,6 +28,7 @@ class Game extends React.Component{
     super(props);
     this.state={
       newGameModelOpen:true,
+      gameIdModalOpen:false,
       playersModelOpen:false,
       propBuyModalOpen:false,
       chanceModalOpen:false,
@@ -383,8 +384,12 @@ class Game extends React.Component{
     }
   }
 
-  closeNewGameModal(){
-    this.setState({newGameModelOpen:false,playersModelOpen:true})
+  closeNewGameModal(e){
+    console.log(e.target.name)
+    switch(e.target.name){
+      case 'new': this.setState({newGameModelOpen:false,playersModelOpen:true});break;
+      case 'resume' : this.setState({newGameModelOpen:false,gameIdModalOpen:true});break;
+    }
   }
   playerOnChange =  (e)=>{
     const {players,playerNames} = this.state
@@ -418,16 +423,28 @@ class Game extends React.Component{
     this.setState({newGameModelOpen:true , winnerModalOpen :false})
     localStorage.removeItem('gameState')
   }
-
-
-  /*handlePlayer1(event) {
-    const playerName = event.target.value;
-    this.setState({playerNames[0].name: playerNames})
+  onChange = (e)=>{
+    this.setState({gameId: e.target.value})
   }
-  
-  handleStartGame() {
-    this.setState({playersModelOpen:false})
-  }*/
+
+  resumeGame = async (e)=>{
+    e.preventDefault();
+    if(this.state.gameId === undefined){
+      toast('Enter a game ID.',{type: toast.TYPE.ERROR});
+    }
+    else{
+      const response = await axios.post(config.host + "/getGame" , {gameId: this.state.gameId});
+      console.log(response)
+      if(response.data.code == 1){
+        this.setState({...response.data.data.state});
+        this.setState({gameIdModalOpen:false});
+        toast(response.data.data.gameId + " loaded",{type: toast.TYPE.SUCCESS})
+      }
+      else{
+        toast(response.data.message , {type: toast.TYPE.ERROR});
+      }
+    }
+  }
   render(){
     return (
       <div className="App">
@@ -448,8 +465,8 @@ class Game extends React.Component{
         show = {this.state.newGameModelOpen}
       >
           <h1>Monopoly London</h1>
-          <button class="newGameBtn">Resume Game</button>
-          <button onClick={this.closeNewGameModal} class="loadGameBtn">New Game</button>
+          <button name = 'resume' class="newGameBtn"  onClick={this.closeNewGameModal} >Resume Game</button>
+          <button name = 'new' onClick={this.closeNewGameModal} class="loadGameBtn">New Game</button>
           
       </Modal>
       <Modal className="players-container"
@@ -462,6 +479,18 @@ class Game extends React.Component{
             <input className="player-green-field" onChange={this.playerOnChange} value={this.state.playerNames[1].name} type="text" name="1" placeholder="Enter Green Player Name"></input><br></br>
             <input className="player-blue-field" onChange={this.playerOnChange} value={this.state.playerNames[2].name} type="text" name="2" placeholder="Enter Blue Player Name"></input><br></br>
             <input className="player-yellow-field" onChange={this.playerOnChange} value={this.state.playerNames[3].name} type="text" name="3" placeholder="Enter Yellow Player Name"></input><br></br>
+            <input className="startGameBtn" type="submit"  value="Start Game"></input>
+          </form>
+          
+      </Modal>
+
+      <Modal className="players-container"
+        hidden = {true}
+        show = {this.state.gameIdModalOpen}
+      >
+          <h1>Enter gameID</h1>
+          <form method='post' className="players-form" onSubmit = {this.resumeGame}>
+            <input className="gameId-field" onChange={this.onChange} value={this.state.gameID} type="text" name="0" placeholder="Enter gameID"></input><br></br>
             <input className="startGameBtn" type="submit"  value="Start Game"></input>
           </form>
           
