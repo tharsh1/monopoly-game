@@ -42,9 +42,17 @@ app.post('/saveGame' , async (req,res)=>{
     }catch(error){
         res.send({code:0 , message: "something went wrong"});
     }
-    
+});
 
-    res.send({})
+app.post('/getGame' , async (req,res)=>{
+    const currGame = await game.findOne({gameId: req.body.gameId});
+    console.log(currGame);
+    if(currGame != null){
+        res.send({code:1 , data: currGame})
+    }
+    else{
+        res.send({code:0 , message: "no such game exists"})
+    }
 });
 
 app.listen(3000);
