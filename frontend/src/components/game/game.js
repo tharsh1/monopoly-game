@@ -27,7 +27,7 @@ class Game extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      newGameModelOpen:true,
+      newGameModelOpen:false,
       gameIdModalOpen:false,
       playersModelOpen:false,
       propBuyModalOpen:false,
@@ -51,7 +51,7 @@ class Game extends React.Component{
         {id:2,name: "Player 3",playerColor:'blue',position:0,balanceMoney: 15000,properties:[],rounds:0, steps:0},
         {id:3,name: "Player 4",playerColor:"yellow",position:0,balanceMoney: 15000,properties:[],rounds:0, steps:0}
       ],
-      playerNames:[{name:'Player1',color:'darkred'},{name:'Player2',color:'green'},{name:'Player3',color:'blue'},{name:'Player4',color:'black'}]
+      playerNames:[{name:'Player1',color:'darkred'},{name:'Player2',color:'green'},{name:'Player3',color:'blue'},{name:'Player4',color:'#faf60a'}]
     };
 
     this.movePawn = this.movePawn.bind(this);

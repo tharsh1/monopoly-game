@@ -316,3 +316,33 @@
     border: none;
     outline: none;
 }
+
+.winner-modal .modal{
+    flex-direction: column;
+    align-items: center;
+}
+
+.winner-modal .modal h2 {
+    width: 100%;
+    text-align: center;
+    border: none;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    background-color:darkslateblue;
+    color: white;
+    border-radius: 5px;
+    font-size: 25px;
+}
+
+.winner-modal .modal button {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: firebrick;
+    font-size: 15px;
+    font-weight: bold;
+    color: wheat;
+    outline: none;
+}

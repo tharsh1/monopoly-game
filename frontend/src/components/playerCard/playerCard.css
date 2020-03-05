@@ -25,7 +25,7 @@
     font-size: 22px;
     color: white;
     justify-content: center;
-    
+    text-shadow: 2px 2px 3px black;
 }
 
 .player-balance{
@@ -36,6 +36,7 @@
     font-size: 22px;
     color: white;
     justify-content: center;
+    text-shadow: 2px 2px 3px black;
 }
 
 .FixedHeightContainer
