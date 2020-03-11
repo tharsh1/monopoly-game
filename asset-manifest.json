@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/monopoly-game/static/css/main.ec9780e6.chunk.css",
+    "main.js": "/monopoly-game/static/js/main.85244f77.chunk.js",
+    "main.js.map": "/monopoly-game/static/js/main.85244f77.chunk.js.map",
+    "runtime-main.js": "/monopoly-game/static/js/runtime-main.b2e67d60.js",
+    "runtime-main.js.map": "/monopoly-game/static/js/runtime-main.b2e67d60.js.map",
+    "static/css/2.5dbdccff.chunk.css": "/monopoly-game/static/css/2.5dbdccff.chunk.css",
+    "static/js/2.f2a640bf.chunk.js": "/monopoly-game/static/js/2.f2a640bf.chunk.js",
+    "static/js/2.f2a640bf.chunk.js.map": "/monopoly-game/static/js/2.f2a640bf.chunk.js.map",
+    "index.html": "/monopoly-game/index.html",
+    "precache-manifest.983e85c52deab76a4c6d486503b462e5.js": "/monopoly-game/precache-manifest.983e85c52deab76a4c6d486503b462e5.js",
+    "service-worker.js": "/monopoly-game/service-worker.js",
+    "static/css/2.5dbdccff.chunk.css.map": "/monopoly-game/static/css/2.5dbdccff.chunk.css.map",
+    "static/css/main.ec9780e6.chunk.css.map": "/monopoly-game/static/css/main.ec9780e6.chunk.css.map",
+    "static/js/2.f2a640bf.chunk.js.LICENSE.txt": "/monopoly-game/static/js/2.f2a640bf.chunk.js.LICENSE.txt",
+    "static/media/blue-pawn.svg": "/monopoly-game/static/media/blue-pawn.938a079d.svg",
+    "static/media/buyicon.svg": "/monopoly-game/static/media/buyicon.9976f91a.svg",
+    "static/media/cancel.svg": "/monopoly-game/static/media/cancel.c907543c.svg",
+    "static/media/dice1.svg": "/monopoly-game/static/media/dice1.38ba986b.svg",
+    "static/media/dice2.svg": "/monopoly-game/static/media/dice2.00410b66.svg",
+    "static/media/dice3.svg": "/monopoly-game/static/media/dice3.cf305e27.svg",
+    "static/media/dice4.svg": "/monopoly-game/static/media/dice4.3e176afc.svg",
+    "static/media/dice5.svg": "/monopoly-game/static/media/dice5.2180d6cc.svg",
+    "static/media/dice6.svg": "/monopoly-game/static/media/dice6.33196269.svg",
+    "static/media/green-pawn.svg": "/monopoly-game/static/media/green-pawn.6431d991.svg",
+    "static/media/game.css": "/monopoly-game/static/media/monopoly-board.e586ec1e.jpg",
+    "static/media/red-pawn.svg": "/monopoly-game/static/media/red-pawn.ac22cd1d.svg",
+    "static/media/yellow-pawn.svg": "/monopoly-game/static/media/yellow-pawn.79c0497f.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b2e67d60.js",
+    "static/css/2.5dbdccff.chunk.css",
+    "static/js/2.f2a640bf.chunk.js",
+    "static/css/main.ec9780e6.chunk.css",
+    "static/js/main.85244f77.chunk.js"
+  ]
+}
