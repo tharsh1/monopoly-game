@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9840abf42fc8c7e6adfb893d1d2685ae",
+    "revision": "8895c94ea37db4c4672c31bc2395adce",
     "url": "/monopoly-game/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/monopoly-game/static/css/2.5dbdccff.chunk.css"
   },
   {
-    "revision": "f83cc2bced80ab8a60e7",
+    "revision": "c878a45d0b3149f2dcf9",
     "url": "/monopoly-game/static/css/main.ec9780e6.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/monopoly-game/static/js/2.f2a640bf.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f83cc2bced80ab8a60e7",
-    "url": "/monopoly-game/static/js/main.85244f77.chunk.js"
+    "revision": "c878a45d0b3149f2dcf9",
+    "url": "/monopoly-game/static/js/main.689c713f.chunk.js"
   },
   {
     "revision": "654aa25dad5878b44b90",

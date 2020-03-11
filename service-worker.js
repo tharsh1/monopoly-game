@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/monopoly-game/precache-manifest.983e85c52deab76a4c6d486503b462e5.js"
+  "/monopoly-game/precache-manifest.530037e6fae53df67666e85e52bd1994.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/monopoly-game/static/css/main.ec9780e6.chunk.css",
-    "main.js": "/monopoly-game/static/js/main.85244f77.chunk.js",
-    "main.js.map": "/monopoly-game/static/js/main.85244f77.chunk.js.map",
+    "main.js": "/monopoly-game/static/js/main.689c713f.chunk.js",
+    "main.js.map": "/monopoly-game/static/js/main.689c713f.chunk.js.map",
     "runtime-main.js": "/monopoly-game/static/js/runtime-main.b2e67d60.js",
     "runtime-main.js.map": "/monopoly-game/static/js/runtime-main.b2e67d60.js.map",
     "static/css/2.5dbdccff.chunk.css": "/monopoly-game/static/css/2.5dbdccff.chunk.css",
     "static/js/2.f2a640bf.chunk.js": "/monopoly-game/static/js/2.f2a640bf.chunk.js",
     "static/js/2.f2a640bf.chunk.js.map": "/monopoly-game/static/js/2.f2a640bf.chunk.js.map",
     "index.html": "/monopoly-game/index.html",
-    "precache-manifest.983e85c52deab76a4c6d486503b462e5.js": "/monopoly-game/precache-manifest.983e85c52deab76a4c6d486503b462e5.js",
+    "precache-manifest.530037e6fae53df67666e85e52bd1994.js": "/monopoly-game/precache-manifest.530037e6fae53df67666e85e52bd1994.js",
     "service-worker.js": "/monopoly-game/service-worker.js",
     "static/css/2.5dbdccff.chunk.css.map": "/monopoly-game/static/css/2.5dbdccff.chunk.css.map",
     "static/css/main.ec9780e6.chunk.css.map": "/monopoly-game/static/css/main.ec9780e6.chunk.css.map",
@@ -33,6 +33,6 @@
     "static/css/2.5dbdccff.chunk.css",
     "static/js/2.f2a640bf.chunk.js",
     "static/css/main.ec9780e6.chunk.css",
-    "static/js/main.85244f77.chunk.js"
+    "static/js/main.689c713f.chunk.js"
   ]
 }
