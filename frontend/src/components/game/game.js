@@ -362,6 +362,21 @@ class Game extends React.Component{
     
   }
 
+
+  mortgage = (propertyId)=>{
+    const blocks = this.state.blocks;
+    const players =this.state.players;
+    let mortgageProperty = blocks[propertyId -1];
+    const ownedBy = mortgageProperty.ownedBy;
+    mortgageProperty.ownedBy = undefined;
+    const player = _.find(players, (player)=>player.id == ownedBy);
+    console.log(propertyId)
+    console.log(player)
+    player.properties = _.filter(player.properties , (property)=>  {console.log(property.id +"b " + propertyId); return property.id !== propertyId});
+    console.log(player)
+  }
+
+
   async saveState(){
     localStorage.setItem('gameState',JSON.stringify(this.state));
     const response = await axios.post(config.host +'/saveGame' ,{gameId: localStorage.currentGameId , state: this.state , winner: this.state.winner});
@@ -625,6 +640,7 @@ class Game extends React.Component{
                     properties = {this.getPlayer(0).properties}
                     name = {this.state.playerNames[0].name}
                     balance = {this.getPlayer(0).balance}
+                    mortgage = {this.mortgage}
                   />
                   <PlayerCard 
                     playerColor={this.state.playerNames[1].color} 
@@ -632,6 +648,7 @@ class Game extends React.Component{
                     properties = {this.getPlayer(1).properties}
                     name = {this.state.playerNames[1].name}
                     balance = {this.getPlayer(1).balance}
+                    mortgage = {this.mortgage}
                   />
               </div>
               <div className="player-row2">
@@ -641,6 +658,7 @@ class Game extends React.Component{
                     properties = {this.getPlayer(2).properties}
                     name = {this.state.playerNames[2].name}
                     balance = {this.getPlayer(2).balance}
+                    mortgage = {this.mortgage}
                   />
                   <PlayerCard 
                     playerColor={this.state.playerNames[3].color} 
@@ -648,6 +666,7 @@ class Game extends React.Component{
                     properties = {this.getPlayer(3).properties}
                     name = {this.state.playerNames[3].name}
                     balance = {this.getPlayer(3).balance}
+                    mortgage = {this.mortgage}
                   />    
               </div>
           </div>

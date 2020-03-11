@@ -64,6 +64,7 @@
 .list-group li {
     display: flex;
     align-items: center;
+    justify-content: ;
     flex-direction: row;
     width: 99.6%;
     height: 50px;
@@ -84,17 +85,34 @@
 }
 
 .list-group .badge {
-    background-color: darkred;
+    background-color: #dc3545;
     color: #fff;
-    font-size: 90%;
+    font-size: 80%;
     box-sizing: border-box;
     border-radius: 4em;
     min-width: 1.5em;
-    padding: 0.5em 1em;
+    padding: 0.5em 0.3em;
+    justify-self: right;
     text-align: center;
     
 }
 
 .list-group .propertyname{
-    width: 80%;
+    width: 50%;
+    font-size: 15px;
+}
+
+.list-group li .mortgage-button{
+    width: 23%;
+    margin:0 10px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #ffc107;
+    background-color:#ffc107;
+    color: black;
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    cursor: pointer;
+    
 }

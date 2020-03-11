@@ -1,5 +1,6 @@
 import React from 'react';
 import './playerCard.css';
+import Modal from '../modal/modal';
 
 class PlayerCard extends React.Component{
     constructor(props){
@@ -9,17 +10,23 @@ class PlayerCard extends React.Component{
 
     listProperties(){
         let propertyList = [];
-        for(let property of this.props.properties){
+        for(let property of this.props.properties){    // console.log(property.id)
             propertyList.push(
                 <div key={property.id}>
                     <li>
                         <div className='propertyname'>{property.name}</div>
+                        <button className = 'mortgage-button' propertyId = {property.id} onClick = {this.mortgageProperty}>mortgage</button>
                         <span className="badge">&pound;{property.rent}</span>
                     </li>
                 </div>
             );
         }
         return propertyList
+    }
+
+    mortgageProperty = (e)=>{
+        const propertyId = e.target.getAttribute('propertyid');
+        this.props.mortgage(propertyId)
     }
 
     render(){
