@@ -27,7 +27,7 @@ class Game extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      newGameModelOpen:false,
+      newGameModelOpen:true,
       gameIdModalOpen:false,
       playersModelOpen:false,
       propBuyModalOpen:false,
@@ -368,12 +368,17 @@ class Game extends React.Component{
     const players =this.state.players;
     let mortgageProperty = blocks[propertyId -1];
     const ownedBy = mortgageProperty.ownedBy;
-    mortgageProperty.ownedBy = undefined;
-    const player = _.find(players, (player)=>player.id == ownedBy);
+    blocks[propertyId - 1].ownedBy = undefined;
+    const playerindex = _.findIndex(players, (player)=>player.id == ownedBy);
     console.log(propertyId)
     console.log(player)
-    player.properties = _.filter(player.properties , (property)=>  {console.log(property.id +"b " + propertyId); return property.id !== propertyId});
-    console.log(player)
+    const player = players[playerindex]
+    players[playerindex].properties = _.filter(player.properties , (property)=>  {console.log(property.id +"b " + propertyId); return property.id != propertyId});
+    players[playerindex].balanceMoney += blocks[propertyId - 1].cost;
+    const toastText = players[playerindex].name + ' sold ' + mortgageProperty.name + " to the bank."
+    toast(toastText , {type: toast.TYPE.INFO});
+    this.setState({players,blocks})
+    
   }
 
 
