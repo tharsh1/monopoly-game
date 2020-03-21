@@ -60,6 +60,10 @@ app.post("/getGame", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
+
 app.listen(process.env.port || 3000, () => {
   console.log("monopoly backend started");
 });
