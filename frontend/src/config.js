@@ -1,3 +1,3 @@
-const host = 'http://localhost:3000';
+const host = "https://monopoly-game-backend-kjsce.herokuapp.com";
 
-export default {host}
+export default { host };
