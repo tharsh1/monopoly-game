@@ -39,6 +39,7 @@ class Game extends React.Component {
       currentCommunity: {},
       currentBlock: {},
       currentPlayer: 0,
+      MortgageDisabled: -1,
       cardState: {
         color: "",
         name: "",
@@ -265,24 +266,33 @@ class Game extends React.Component {
 
   async eliminatePlayer(player, players) {
     const blocks = this.state.blocks;
-    toast(players[player].name + " is eliminated", { type: toast.TYPE.ERROR });
-    const propertiesOwned = _.map(players[player].properties, obj => obj.id);
-    for (let property of propertiesOwned) {
-      blocks[property - 1].ownedBy = undefined;
-    }
-    this.setState({ blocks });
-    players.splice(player, 1);
-    if (players.length === 1) {
-      this.setState({ winnerModalOpen: true });
-      this.setState({ winner: players[0].name });
-      const response = await axios.post(config.host + "/saveGame", {
-        gameId: localStorage.currentGameId,
-        state: this.state,
-        winner: this.state.winner
+    const confirmation = confirm(
+      "Do you want to sell a property to stay in the game: "
+    );
+    if (!confirmation) {
+      toast(players[player].name + " is eliminated", {
+        type: toast.TYPE.ERROR
       });
-      localStorage.setItem("gameState", JSON.stringify(this.state));
+      const propertiesOwned = _.map(players[player].properties, obj => obj.id);
+      for (let property of propertiesOwned) {
+        blocks[property - 1].ownedBy = undefined;
+      }
+      this.setState({ blocks });
+      players.splice(player, 1);
+      if (players.length === 1) {
+        this.setState({ winnerModalOpen: true });
+        this.setState({ winner: players[0].name });
+        const response = await axios.post(config.host + "/saveGame", {
+          gameId: localStorage.currentGameId,
+          state: this.state,
+          winner: this.state.winner
+        });
+        localStorage.setItem("gameState", JSON.stringify(this.state));
+        this.nextPlayer(true, player, players);
+      }
+    } else {
+      this.setState({ mortgageDisabled: player });
     }
-    this.nextPlayer(true, player, players);
   }
 
   nextPlayer(deletedthis, currentPlayer, players) {
@@ -454,6 +464,11 @@ class Game extends React.Component {
       " to the bank.";
     toast(toastText, { type: toast.TYPE.INFO });
     this.setState({ players, blocks });
+
+    if (this.state.mortgageDisabled != -1) {
+      this.setState({ MortgageDisabled: -1 });
+      this.state.nextPlayer(false, playerindex, players);
+    }
   };
 
   async saveState() {
@@ -810,6 +825,10 @@ class Game extends React.Component {
                 name={this.state.playerNames[0].name}
                 balance={this.getPlayer(0).balance}
                 mortgage={this.mortgage}
+                MortgageDisabled={
+                  this.state.MortgageDisabled != 0 &&
+                  this.state.mortgageDisabled != -1
+                }
               />
               <PlayerCard
                 playerColor={this.state.playerNames[1].color}
@@ -820,6 +839,10 @@ class Game extends React.Component {
                 name={this.state.playerNames[1].name}
                 balance={this.getPlayer(1).balance}
                 mortgage={this.mortgage}
+                MortgageDisabled={
+                  this.state.MortgageDisabled != 1 &&
+                  this.state.mortgageDisabled != -1
+                }
               />
             </div>
             <div className="player-row2">
@@ -832,6 +855,10 @@ class Game extends React.Component {
                 name={this.state.playerNames[2].name}
                 balance={this.getPlayer(2).balance}
                 mortgage={this.mortgage}
+                MortgageDisabled={
+                  this.state.MortgageDisabled != 2 &&
+                  this.state.mortgageDisabled != -1
+                }
               />
               <PlayerCard
                 playerColor={this.state.playerNames[3].color}
@@ -842,6 +869,10 @@ class Game extends React.Component {
                 name={this.state.playerNames[3].name}
                 balance={this.getPlayer(3).balance}
                 mortgage={this.mortgage}
+                MortgageDisabled={
+                  this.state.MortgageDisabled != 3 &&
+                  this.state.mortgageDisabled != -1
+                }
               />
             </div>
           </div>
