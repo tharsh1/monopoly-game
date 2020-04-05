@@ -266,7 +266,7 @@ class Game extends React.Component {
 
   async eliminatePlayer(player, players) {
     const blocks = this.state.blocks;
-    const confirmation = confirm(
+    const confirmation = window.confirm(
       "Do you want to sell a property to stay in the game: "
     );
     if (!confirmation) {
